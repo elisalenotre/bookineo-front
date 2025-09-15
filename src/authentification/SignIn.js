@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import "./SignIn.css";
 
 export default function SignIn() {
-  const [nom, setNom] = useState("");
-  const [prenom, setPrenom] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -36,28 +34,6 @@ export default function SignIn() {
         {error && <div className="error-box">{error}</div>}
 
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Nom</label>
-            <input
-              type="text"
-              placeholder="Charles"
-              value={nom}
-              onChange={(e) => setNom(e.target.value)}
-              required
-            />
-          </div>
-
-            <div className="form-group">
-            <label>Prénom</label>
-            <input
-              type="text"
-              placeholder="Leclerc"
-              value={prenom}
-              onChange={(e) => setPrenom(e.target.value)}
-              required
-            />
-          </div>
-
           <div className="form-group">
             <label>Email</label>
             <input
