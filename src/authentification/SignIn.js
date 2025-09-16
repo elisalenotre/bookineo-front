@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { loginUser } from "../api/auth";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -7,23 +8,26 @@ export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    if (!email.includes("@")) {
-      setError("Email invalide");
-      return;
-    }
-    if (password.length < 6) {
-      setError("Mot de passe incorrect");
-      return;
-    }
+    if (!email.includes("@")) return setError("Email invalide");
+    if (password.length < 6) return setError("Mot de passe trop court");
 
-    alert(
-      `Connexion réussie ✅ (simulation)\nSe souvenir de moi : ${rememberMe ? "Oui" : "Non"}`
-    );
+    try {
+      setLoading(true);
+      await loginUser({ email, password, rememberMe });
+      navigate("/");
+    } catch (err) {
+      setError(err.message || "Une erreur est survenue");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -69,7 +73,6 @@ export default function SignIn() {
             </a>
           </div>
 
-          {/* Checkbox "Se souvenir de moi" */}
           <div className="checkbox">
             <input
               className="input"
@@ -81,8 +84,8 @@ export default function SignIn() {
             <label htmlFor="rememberMe">Se souvenir de moi</label>
           </div>
 
-          <button className="btn submit-btn" type="submit">
-            Se connecter
+          <button className="btn submit-btn" type="submit" disabled={loading}>
+            {loading ? "Connexion..." : "Se connecter"}
           </button>
 
           <p className="link signup-link">
