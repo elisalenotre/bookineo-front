@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import "./SignIn.css";
 
@@ -11,25 +12,45 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError("");
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!email.includes("@")) {
-      setError("Email invalide");
-      return;
-    }
-    if (password.length < 6) {
-      setError("Mot de passe trop court");
-      return;
-    }
-    if (password !== confirmPassword) {
-      setError("Les mots de passe ne correspondent pas");
-      return;
-    }
-
-    alert("Inscription réussie ✅ (simulation)");
+  // Simulation 
+  const profileData = {
+    firstName: prenom,
+    lastName: nom,
+    email: email,
   };
+  localStorage.setItem("profileData", JSON.stringify(profileData));
+
+  try {
+    const response = await axios.post("https://localhost:8000/api/users", {
+      email,
+      password,
+    });
+    console.log(response.data);
+    alert("Utilisateur créé ! (simulation profile stockée)");
+  } catch (error) {
+    console.error(error);
+    alert("Erreur lors de la création !");
+  }
+};
+
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post("https://localhost:8000/api/users", {
+  //       email,
+  //       password,
+  //     });
+  //     console.log(response.data);
+  //     alert("Utilisateur créé !");
+  //   } catch (error) {
+  //     console.error(error);
+  //     alert("Erreur lors de la création !");
+  //   }
+  // };
 
   return (
     <div className="login-container">
@@ -45,7 +66,6 @@ export default function SignUp() {
               placeholder="Charles"
               value={nom}
               onChange={(e) => setNom(e.target.value)}
-              required
             />
           </div>
 
@@ -56,7 +76,6 @@ export default function SignUp() {
               placeholder="Leclerc"
               value={prenom}
               onChange={(e) => setPrenom(e.target.value)}
-              required
             />
           </div>
 
