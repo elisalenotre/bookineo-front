@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./SignIn.css";
 
 export default function SignUp() {
   const [nom, setNom] = useState("");
@@ -32,7 +31,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className="login-container">
+    <div className="container login-container">
       <div className="login-box">
         <h2>Page d'inscription</h2>
         {error && <div className="error-box">{error}</div>}
@@ -41,6 +40,7 @@ export default function SignUp() {
             <div className="form-group">
             <label>Nom</label>
             <input
+              className="input"
               type="text"
               placeholder="Charles"
               value={nom}
@@ -52,6 +52,7 @@ export default function SignUp() {
             <div className="form-group">
             <label>Prénom</label>
             <input
+              className="input"
               type="text"
               placeholder="Leclerc"
               value={prenom}
@@ -63,6 +64,7 @@ export default function SignUp() {
           <div className="form-group">
             <label>Email</label>
             <input
+              className="input"
               type="email"
               placeholder="exemple@mail.com"
               value={email}
@@ -75,6 +77,7 @@ export default function SignUp() {
             <label>Mot de passe</label>
             <div className="password-wrap">
               <input
+                className="input"
                 type={showPassword ? "text" : "password"}
                 placeholder="********"
                 value={password}
@@ -83,7 +86,7 @@ export default function SignUp() {
               />
               <button
                 type="button"
-                className="toggle-password"
+                className="toggle toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? "🙈" : "👁️"}
@@ -94,6 +97,7 @@ export default function SignUp() {
           <div className="form-group">
             <label>Confirmer le mot de passe</label>
             <input
+              className="input"
               type={showPassword ? "text" : "password"}
               placeholder="********"
               value={confirmPassword}
@@ -102,11 +106,11 @@ export default function SignUp() {
             />
           </div>
 
-          <button className="submit-btn" type="submit">
+          <button className="btn submit-btn" type="submit">
             S'inscrire
           </button>
 
-          <p className="signup-link">
+          <p className="link signup-link">
             Déjà un compte ? <Link to="/login">Connexion</Link>
           </p>
         </form>
