@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./SignIn.css"; 
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -22,8 +21,8 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-box">
+    <div className="container login-container">
+      <div className="box login-box">
         <h2>Mot de passe oublié</h2>
 
         {error && <div className="error-box">{error}</div>}
@@ -33,6 +32,7 @@ export default function ForgotPassword() {
           <div className="form-group">
             <label>Email</label>
             <input
+            className="input"
               type="email"
               placeholder="exemple@mail.com"
               value={email}
@@ -41,11 +41,11 @@ export default function ForgotPassword() {
             />
           </div>
 
-          <button className="submit-btn" type="submit">
+          <button className="btn submit-btn" type="submit">
             Réinitialiser le mot de passe
           </button>
 
-          <p className="signup-link">
+          <p className="link signup-link">
             <Link to="/login">Retour à la connexion</Link>
           </p>
         </form>

@@ -1,19 +1,34 @@
-.login-container {
+h3{
+  text-align: center;
+}
+
+.container{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: #f5f5f5;
 }
 
-.login-box {
+.login-container {
+  height: 100vh;
+}
+
+.box{
   background-color: #eef2f6;
   padding: 2rem;
   border-radius: 14px;
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.login-box {
   width: 380px;
   max-width: 92%;
 }
+
+.book-box{
+  width: 200px;
+}
+
 
 .login-box h2 {
   margin-bottom: 1.5rem;
@@ -46,13 +61,17 @@
   color: #444;
 }
 
-.form-group input {
-  width: 100%;
-  padding: 0.75rem 3.2rem 0.75rem 0.75rem; /* espace pour icône si nécessaire */
+.input{
+  padding: 0.5rem;
   border: 1px solid #cfcfcf;
   border-radius: 10px;
   font-size: 1rem;
   box-sizing: border-box;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 3.2rem 0.75rem 0.75rem;
 }
 
 .form-group input:focus {
@@ -79,15 +98,18 @@
   padding: 4px;
 }
 
-.forgot-link {
-  display: block;
-  margin-top: 6px;
+.link{
+    margin-top: 6px;
   font-size: 0.9rem;
   color: #4c7bff;
   text-decoration: none;
 }
 
-.forgot-link:hover {
+.forgot-link {
+  display: block;
+}
+
+.link:hover {
   text-decoration: underline;
 }
 
@@ -99,8 +121,7 @@
   color: #444;
 }
 
-.submit-btn {
-  width: 100%;
+.btn{
   padding: 0.75rem;
   background-color: #4c7bff;
   color: #fff;
@@ -110,7 +131,17 @@
   cursor: pointer;
 }
 
-.submit-btn:hover {
+.submit-btn {
+  width: 100%;
+}
+
+.search-btn{
+  border-radius: 0 10px 10px 0;
+  border: 1px solid #4c7bff;
+  padding: 0.5rem;
+}
+
+.btn:hover {
   background-color: #365fcc;
 }
 
@@ -125,7 +156,7 @@
   text-decoration: none;
 }
 
-.signup-link a:hover {
+.link a:hover {
   text-decoration: underline;
 }
 
@@ -159,4 +190,37 @@
     width: 92%;
     padding: 1.5rem;
   }
+}
+
+
+/*filtre et book list*/
+.book-list{
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.search-bar-section{
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar{
+  border-radius: 10px 0 0 10px;
+  width: 80%;
+  max-width: 30rem;
+}
+
+.price-input{
+  display: flex;
+  gap: 1rem;
+}
+
+.price-field{
+  max-width: 15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }

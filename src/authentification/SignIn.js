@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./SignIn.css";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -28,8 +27,8 @@ export default function SignIn() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-box">
+    <div className="container login-container">
+      <div className="box login-box">
         <h2>Page de connexion</h2>
         {error && <div className="error-box">{error}</div>}
 
@@ -37,6 +36,7 @@ export default function SignIn() {
           <div className="form-group">
             <label>Email</label>
             <input
+              className="input"
               type="email"
               placeholder="exemple@mail.com"
               value={email}
@@ -49,6 +49,7 @@ export default function SignIn() {
             <label>Mot de passe</label>
             <div className="password-wrap">
               <input
+                className="input"
                 type={showPassword ? "text" : "password"}
                 placeholder="********"
                 value={password}
@@ -63,7 +64,7 @@ export default function SignIn() {
                 {showPassword ? "👁️" : "🙈"}
               </button>
             </div>
-            <a href="/forgot-password" className="forgot-link">
+            <a href="/forgot-password" className="link forgot-link">
               Mot de passe oublié ?
             </a>
           </div>
@@ -71,6 +72,7 @@ export default function SignIn() {
           {/* Checkbox "Se souvenir de moi" */}
           <div className="checkbox">
             <input
+              className="input"
               id="rememberMe"
               type="checkbox"
               checked={rememberMe}
@@ -79,11 +81,11 @@ export default function SignIn() {
             <label htmlFor="rememberMe">Se souvenir de moi</label>
           </div>
 
-          <button className="submit-btn" type="submit">
+          <button className="btn submit-btn" type="submit">
             Se connecter
           </button>
 
-          <p className="signup-link">
+          <p className="link signup-link">
             Pas encore de compte ? <Link to="/signup">Inscription</Link>
           </p>
         </form>
