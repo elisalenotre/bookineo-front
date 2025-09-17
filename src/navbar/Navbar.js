@@ -31,6 +31,7 @@ const Navbar = ({ isLoggedIn, onLogout, username }) => {
                 <button onClick={() => navigate("/profile")}>Profil</button>
                 <button onClick={() => navigate("/messages")}>Messagerie</button>
                 <button onClick={() => navigate("/restitution")}>Retourner un livre</button>
+                <button onClick={() => navigate("/historique")}>Historique</button>
                 <button onClick={onLogout}>Déconnexion</button>
               </div>
             )}
