@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { registerUser, loginUser } from "../api/auth";
 
 export default function SignUp() {
   const [nom, setNom] = useState("");
@@ -9,25 +10,35 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    if (!email.includes("@")) {
-      setError("Email invalide");
-      return;
-    }
-    if (password.length < 6) {
-      setError("Mot de passe trop court");
-      return;
-    }
-    if (password !== confirmPassword) {
-      setError("Les mots de passe ne correspondent pas");
-      return;
-    }
+    if (!email.includes("@")) return setError("Email invalide");
+    if (password.length < 6) return setError("Mot de passe trop court");
+    if (password !== confirmPassword) return setError("Les mots de passe ne correspondent pas");
 
-    alert("Inscription réussie ✅ (simulation)");
+    try {
+      setLoading(true);
+      await registerUser({
+        email,
+        password,
+        first_name: prenom,
+        last_name: nom,
+      });
+
+      await loginUser({ email, password, rememberMe: true });
+
+      navigate("/login");
+    } catch (err) {
+      setError(err.message || "Une erreur est survenue");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -37,7 +48,7 @@ export default function SignUp() {
         {error && <div className="error-box">{error}</div>}
 
         <form onSubmit={handleSubmit}>
-            <div className="form-group">
+          <div className="form-group">
             <label>Nom</label>
             <input
               className="input"
@@ -49,7 +60,7 @@ export default function SignUp() {
             />
           </div>
 
-            <div className="form-group">
+          <div className="form-group">
             <label>Prénom</label>
             <input
               className="input"
@@ -106,8 +117,8 @@ export default function SignUp() {
             />
           </div>
 
-          <button className="btn submit-btn" type="submit">
-            S'inscrire
+          <button className="btn submit-btn" type="submit" disabled={loading}>
+            {loading ? "Inscription..." : "S'inscrire"}
           </button>
 
           <p className="link signup-link">
