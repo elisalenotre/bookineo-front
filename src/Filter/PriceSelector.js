@@ -1,71 +1,84 @@
-import React, { useState } from "react";
+import React from 'react';
 
-export default function PriceSelector() {
-    const [minPrice, setMinPrice] = useState(2500);
-    const [maxPrice, setMaxPrice] = useState(8500);
+const PriceSelector = ({
+  dataMinPrice,
+  dataMaxPrice,
+  minPrice,
+  maxPrice,
+  onMinPriceChange,
+  onMaxPriceChange,
+}) => {
+  const handleMinPriceChange = (e) => {
+    const value = Math.min(Number(e.target.value), maxPrice - 0.01);
+    onMinPriceChange(value);
+  };
 
-    const handleMinPriceChange = (e) => {
-        const value = Math.min(Number(e.target.value), maxPrice - 1);
-        setMinPrice(value);
-    };
+  const handleMaxPriceChange = (e) => {
+    const value = Math.max(Number(e.target.value), minPrice + 0.01);
+    onMaxPriceChange(value);
+  };
 
-    const handleMaxPriceChange = (e) => {
-        const value = Math.max(Number(e.target.value), minPrice + 1);
-        setMaxPrice(value);
-    };
+  return (
+    <div>
+      <div className="price-input-container">
+        <div className="price-input box">
+          <h3>Choisissez une fourchette de prix :</h3>
 
-    return (
-        <div>
-            <div className="price-input-container">
-                <div className="price-input">
-                    <div className="price-field">
-                        <span>Prix minimum</span>
-                        <input
-                            type="number"
-                            className="input min-input"
-                            value={minPrice}
-                            onChange={handleMinPriceChange}
-                        />
-                    <input
-                        type="range"
-                        className="input min-range"
-                        min="0"
-                        max="20"
-                        value={minPrice}
-                        step="1"
-                        onChange={handleMinPriceChange}
-                    />
-                    </div>
-                    <div className="price-field">
-                        <span>Prix maximum</span>
-                        <input
-                            type="number"
-                            className="input max-input"
-                            value={maxPrice}
-                            onChange={handleMaxPriceChange}
-                        />
-                        <input
-                            className="input max-range"
-                            type="range"
-                            min="0"
-                            max="100"
-                            value={maxPrice}
-                            step="1"
-                            onChange={handleMaxPriceChange}
-                        />  
-                    </div>
-                </div>
-                <div className="slider">
-                    <div
-                        className="price-slider"
-                        style={{
-                            left: `${(minPrice / 10000) * 100}%`,
-                            right: `${100 - (maxPrice / 10000) * 100}%`,
-                        }}
-                    ></div>
-                </div>
+          <div className="price-fields">
+            <div className="price-field">
+              <span>Prix minimum</span>
+              <input
+                type="number"
+                className="input min-input"
+                value={minPrice}
+                min={dataMinPrice}
+                max={maxPrice - 0.01}
+                onChange={handleMinPriceChange}
+              />
+              <input
+                type="range"
+                className="input min-range"
+                min={dataMinPrice}
+                max={dataMaxPrice}
+                value={minPrice}
+                step="0.01"
+                onChange={handleMinPriceChange}
+              />
             </div>
+            <div className="price-field">
+              <span>Prix maximum</span>
+              <input
+                type="number"
+                className="input max-input"
+                value={maxPrice}
+                min={minPrice + 0.01}
+                max={dataMaxPrice}
+                onChange={handleMaxPriceChange}
+              />
+              <input
+                type="range"
+                className="input max-range"
+                min={dataMinPrice}
+                max={dataMaxPrice}
+                value={maxPrice}
+                step="0.01"
+                onChange={handleMaxPriceChange}
+              />
+            </div>
+          </div>
 
+          <div className="slider">
+            <div
+              className="price-slider"
+              style={{
+                left: `${((minPrice - dataMinPrice) / (dataMaxPrice - dataMinPrice)) * 100}%`,
+                right: `${100 - ((maxPrice - dataMinPrice) / (dataMaxPrice - dataMinPrice)) * 100}%`,
+              }}
+            ></div>
+          </div>
         </div>
-    );
-}
+      </div>
+    </div>
+  );
+};
+export default PriceSelector;
