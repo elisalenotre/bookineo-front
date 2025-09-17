@@ -4,7 +4,7 @@ import SignIn from "./authentification/SignIn";
 import SignUp from "./authentification/SignUp";
 import ForgotPassword from "./authentification/ForgotPassword";
 import Home from "./Filter/Home";
-import books from '././Filter/BookData';
+import books from './home/book/BookData';
 import './authentification/SignIn.css'
 import Profile from "./profile/Profile";
 import Navbar from "./navbar/Navbar";  

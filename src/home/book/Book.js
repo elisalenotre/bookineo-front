@@ -1,5 +1,5 @@
 import React from 'react';
-import books from './BookData';
+import books from '../../Filter/BookData';
 
 
 const Book = ({title, author, description, price, genre, status}) => {
