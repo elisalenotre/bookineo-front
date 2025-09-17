@@ -7,7 +7,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-logo">MonApp</div>
+      <div className="navbar-logo">Bookineo</div>
       <div className="navbar-right">
         {isLoggedIn && (
           <button className="nav-btn" onClick={() => navigate("/profile")}>
