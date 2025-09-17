@@ -6,11 +6,12 @@ import ForgotPassword from "./authentification/ForgotPassword";
 import Home from "./Filter/Home";
 import './authentification/SignIn.css'
 import Profile from "./profile/Profile";
-import Navbar from "./navbar/Navbar";   
+import Navbar from "./navbar/Navbar";  
+import Restitution from "./restitution/Restitution";  
+
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // "true" pour tester le bouton Profil dans la Navbar
-
+  const [isLoggedIn, setIsLoggedIn] = useState(true); 
   const handleLogout = () => {
     setIsLoggedIn(false);
   };
@@ -29,6 +30,9 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/home" element={< Home/>} />
+
+        <Route path="/profile" element={< Profile/>} />
+        <Route path="/restitution" element={< Restitution/>} />
 
       </Routes>
     </Router>

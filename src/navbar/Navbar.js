@@ -1,27 +1,40 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom"; 
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
 import "./Navbar.css";
 
-const Navbar = ({ isLoggedIn, onLogout }) => {
+const Navbar = ({ isLoggedIn, onLogout, username }) => {
   const navigate = useNavigate();
+  const [openMenu, setOpenMenu] = useState(false);
 
   return (
     <nav className="navbar">
       <div className="navbar-logo">Bookineo</div>
+
       <div className="navbar-right">
-        {isLoggedIn && (
-          <button className="nav-btn" onClick={() => navigate("/profile")}>
-            Profil
-          </button>
-        )}
-        {isLoggedIn ? (
-          <button className="nav-btn" onClick={onLogout}>
-            Déconnexion
-          </button>
-        ) : (
+        {!isLoggedIn ? (
           <Link to="/login" className="nav-btn">
             Connexion
           </Link>
+        ) : (
+          <div className="user-menu">
+            <div
+              className="user-info"
+              onClick={() => setOpenMenu(!openMenu)}
+            >
+              <FaUserCircle className="user-icon" />
+              <span className="username">{username}</span>
+            </div>
+
+            {openMenu && (
+              <div className="dropdown">
+                <button onClick={() => navigate("/profile")}>Profil</button>
+                <button onClick={() => navigate("/messages")}>Messagerie</button>
+                <button onClick={() => navigate("/restitution")}>Retourner un livre</button>
+                <button onClick={onLogout}>Déconnexion</button>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </nav>
