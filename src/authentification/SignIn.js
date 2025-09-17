@@ -1,35 +1,37 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "./SignIn.css";
+import { useNavigate, Link } from "react-router-dom";
+import { registerUser, loginUser } from "../api/auth";
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    if (!email.includes("@")) {
-      setError("Email invalide");
-      return;
-    }
-    if (password.length < 6) {
-      setError("Mot de passe incorrect");
-      return;
-    }
+    if (!email.includes("@")) return setError("Email invalide");
+    if (password.length < 6) return setError("Mot de passe incorrect");
 
-    alert(
-      `Connexion réussie ✅ (simulation)\nSe souvenir de moi : ${rememberMe ? "Oui" : "Non"}`
-    );
+    try {
+      setLoading(true);
+      await loginUser({ email, password, rememberMe });
+      navigate("/home");
+    } catch (err) {
+      setError(err.message || "Identifiants invalides");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="login-container">
-      <div className="login-box">
+    <div className="container login-container">
+      <div className="box login-box">
         <h2>Page de connexion</h2>
         {error && <div className="error-box">{error}</div>}
 
@@ -37,6 +39,7 @@ export default function SignIn() {
           <div className="form-group">
             <label>Email</label>
             <input
+              className="input"
               type="email"
               placeholder="exemple@mail.com"
               value={email}
@@ -49,6 +52,7 @@ export default function SignIn() {
             <label>Mot de passe</label>
             <div className="password-wrap">
               <input
+                className="input"
                 type={showPassword ? "text" : "password"}
                 placeholder="********"
                 value={password}
@@ -63,14 +67,15 @@ export default function SignIn() {
                 {showPassword ? "🐵" : "🙈"} 
               </button>
             </div>
-            <a href="/forgot-password" className="forgot-link">
+            <Link to="/forgot-password" className="link forgot-link">
               Mot de passe oublié ?
-            </a>
+            </Link>
           </div>
 
           {/* Checkbox "Se souvenir de moi" 👁️*/}
           <div className="checkbox">
             <input
+              className="input"
               id="rememberMe"
               type="checkbox"
               checked={rememberMe}
@@ -79,11 +84,11 @@ export default function SignIn() {
             <label htmlFor="rememberMe">Se souvenir de moi</label>
           </div>
 
-          <button className="submit-btn" type="submit">
-            Se connecter
+          <button className="btn submit-btn" type="submit" disabled={loading}>
+            {loading ? "Connexion..." : "Se connecter"}
           </button>
 
-          <p className="signup-link">
+          <p className="link signup-link">
             Pas encore de compte ? <Link to="/signup">Inscription</Link>
           </p>
         </form>

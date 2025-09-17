@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import "./SignIn.css";
+import { Link, useNavigate } from "react-router-dom";
+import { registerUser, loginUser } from "../api/auth";
 
 export default function SignUp() {
   const [nom, setNom] = useState("");
@@ -11,64 +11,48 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
 
-  // Vérification email
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    setError("Email invalide.");
-    return;
-  }
+    if (!email.includes("@")) return setError("Email invalide");
+    if (password.length < 6) return setError("Mot de passe trop court");
+    if (password !== confirmPassword) return setError("Les mots de passe ne correspondent pas");
 
-  // Vérification mot de passe conforme
-  const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-  if (!passwordRegex.test(password)) {
-    setError("Le mot de passe doit contenir au moins 8 caractères, une majuscule et un chiffre.");
-    return;
-  }
+    try {
+      setLoading(true);
+      await registerUser({
+        email,
+        password,
+        first_name: prenom,
+        last_name: nom,
+      });
 
-  // Vérification confirmation
-  if (password !== confirmPassword) {
-    setError("Les mots de passe ne correspondent pas.");
-    return;
-  }
+      await loginUser({ email, password, rememberMe: true });
 
-  setError(""); // Réinitialise l'erreur si tout est OK
-
-  // Simulation 
-  const profileData = {
-    firstName: prenom,
-    lastName: nom,
-    email: email,
+      navigate("/login");
+    } catch (err) {
+      setError(err.message || "Une erreur est survenue");
+    } finally {
+      setLoading(false);
+    }
   };
-  localStorage.setItem("profileData", JSON.stringify(profileData));
-
-  try {
-    const response = await axios.post("https://localhost:8000/api/users", {
-      email,
-      password,
-    });
-    console.log(response.data);
-    alert("Utilisateur créé ! (simulation profile stockée)");
-  } catch (error) {
-    console.error(error);
-    alert("Erreur lors de la création !");
-  }
-};
 
   return (
-    <div className="login-container">
+    <div className="container login-container">
       <div className="login-box">
         <h2>Page d'inscription</h2>
         {error && <div className="error-box">{error}</div>}
 
         <form onSubmit={handleSubmit}>
-            <div className="form-group">
+          <div className="form-group">
             <label>Nom</label>
             <input
+              className="input"
               type="text"
               placeholder="Charles"
               value={nom}
@@ -76,9 +60,10 @@ const handleSubmit = async (e) => {
             />
           </div>
 
-            <div className="form-group">
+          <div className="form-group">
             <label>Prénom</label>
             <input
+              className="input"
               type="text"
               placeholder="Leclerc"
               value={prenom}
@@ -89,6 +74,7 @@ const handleSubmit = async (e) => {
           <div className="form-group">
             <label>Email</label>
             <input
+              className="input"
               type="email"
               placeholder="exemple@mail.com"
               value={email}
@@ -101,6 +87,7 @@ const handleSubmit = async (e) => {
             <label>Mot de passe</label>
             <div className="password-wrap">
               <input
+                className="input"
                 type={showPassword ? "text" : "password"}
                 placeholder="********"
                 value={password}
@@ -109,7 +96,7 @@ const handleSubmit = async (e) => {
               />
               <button
                 type="button"
-                className="toggle-password"
+                className="toggle toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? "🙈" : "🐵"}
@@ -120,6 +107,7 @@ const handleSubmit = async (e) => {
           <div className="form-group">
             <label>Confirmer le mot de passe</label>
             <input
+              className="input"
               type={showPassword ? "text" : "password"}
               placeholder="********"
               value={confirmPassword}
@@ -128,11 +116,11 @@ const handleSubmit = async (e) => {
             />
           </div>
 
-          <button className="submit-btn" type="submit">
-            S'inscrire
+          <button className="btn submit-btn" type="submit" disabled={loading}>
+            {loading ? "Inscription..." : "S'inscrire"}
           </button>
 
-          <p className="signup-link">
+          <p className="link signup-link">
             Déjà un compte ? <Link to="/login">Connexion</Link>
           </p>
         </form>

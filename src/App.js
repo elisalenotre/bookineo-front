@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import SignIn from "./authentification/SignIn";
 import SignUp from "./authentification/SignUp";
 import ForgotPassword from "./authentification/ForgotPassword";
+import Home from "./Filter/Home";
+import './authentification/SignIn.css'
 import Profile from "./profile/Profile";
 import Navbar from "./navbar/Navbar";   
 
@@ -14,6 +16,7 @@ function App() {
   };
 
   return (
+    <div className="App">
     <Router>
       <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
 
@@ -25,14 +28,11 @@ function App() {
         />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route
-          path="/profile"
-          element={
-            isLoggedIn ? <Profile /> : <Navigate to="/login" />
-          }
-        />
+        <Route path="/home" element={< Home/>} />
+
       </Routes>
     </Router>
+    </div>
   );
 }
 
