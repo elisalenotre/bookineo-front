@@ -1,12 +1,21 @@
-import React from "react";
+import React from 'react';
 
-function SearchBar() {
+const SearchBar = ({ searchInput, setSearchInput }) => {
+  const handleChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+
     return(
         <div>
             <h3>Rechercher un livre</h3>
             <div className="search-bar-section">
-                <input className="input search-bar" type="text" placeholder="titre du livre"/>
-                <button className="btn search-btn">Rechercher</button>
+                <input 
+                    type="search"
+                    className="input search-bar" 
+                    onChange={handleChange}
+                    value={searchInput} 
+                    placeholder="titre du livre"
+                />
             </div>
         </div>
     )

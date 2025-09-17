@@ -1,12 +1,14 @@
 import React from 'react';
 import Book from './Book';
 import books from './BookData';
+import SearchBar from './SearchBar';  
 
-const BookList = ({ minPrice, maxPrice }) => {
-  const filteredBooks = books.filter(
-    (book) => book.price <= maxPrice && book.price >= minPrice
-  
-  );
+const BookList = ({ minPrice, maxPrice, searchInput }) => {
+  const filteredBooks = books.filter((book) => {
+    const inPriceRange = book.price >= minPrice && book.price <= maxPrice;
+    const matchesSearch = book.title.toLowerCase().includes(searchInput.toLowerCase());
+    return inPriceRange && matchesSearch;
+  });
 
   return (
     <ul className="book-list">
