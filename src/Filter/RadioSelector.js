@@ -1,16 +1,24 @@
 import React from "react";
 
-function RadioSelector() {
+function RadioSelector({ availability, setAvailability }) {
     return(
         <div className="box selector-box">
-                <h3>Filtrer par status</h3>
+            <h3>Filtrer par status</h3>
 
-                    <input type="checkbox" id="available" name="available" value="available" />
-                    <label for="available">Disponible</label>
+                <input
+                    type="checkbox"
+                    checked={availability === true}
+                    onChange={() => setAvailability(availability === true ? null : true)}
+                />
+                <label>Disponible</label>
+                    
+                <input
+                    type="checkbox"
+                    checked={availability === false}
+                    onChange={() => setAvailability(availability === false ? null : false)}
+                />
+                <label>Indisponible</label>
             
-                    <input type="checkbox" id="unavailable" name="unavailable" value="unavailable" />
-                    <label for="unavailable">Indisponible</label>
-                
         </div>
     )
 }
