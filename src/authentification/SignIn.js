@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { loginUser } from "../api/auth";
+import { registerUser, loginUser } from "../api/auth";
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -10,21 +11,19 @@ export default function SignIn() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     if (!email.includes("@")) return setError("Email invalide");
-    if (password.length < 6) return setError("Mot de passe trop court");
+    if (password.length < 6) return setError("Mot de passe incorrect");
 
     try {
       setLoading(true);
       await loginUser({ email, password, rememberMe });
-      navigate("/");
+      navigate("/home");
     } catch (err) {
-      setError(err.message || "Une erreur est survenue");
+      setError(err.message || "Identifiants invalides");
     } finally {
       setLoading(false);
     }
@@ -68,9 +67,9 @@ export default function SignIn() {
                 {showPassword ? "👁️" : "🙈"}
               </button>
             </div>
-            <a href="/forgot-password" className="link forgot-link">
+            <Link to="/forgot-password" className="link forgot-link">
               Mot de passe oublié ?
-            </a>
+            </Link>
           </div>
 
           <div className="checkbox">
