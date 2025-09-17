@@ -12,8 +12,31 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
+
 const handleSubmit = async (e) => {
   e.preventDefault();
+
+  // Vérification email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    setError("Email invalide.");
+    return;
+  }
+
+  // Vérification mot de passe conforme
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+  if (!passwordRegex.test(password)) {
+    setError("Le mot de passe doit contenir au moins 8 caractères, une majuscule et un chiffre.");
+    return;
+  }
+
+  // Vérification confirmation
+  if (password !== confirmPassword) {
+    setError("Les mots de passe ne correspondent pas.");
+    return;
+  }
+
+  setError(""); // Réinitialise l'erreur si tout est OK
 
   // Simulation 
   const profileData = {
@@ -35,22 +58,6 @@ const handleSubmit = async (e) => {
     alert("Erreur lors de la création !");
   }
 };
-
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post("https://localhost:8000/api/users", {
-  //       email,
-  //       password,
-  //     });
-  //     console.log(response.data);
-  //     alert("Utilisateur créé !");
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert("Erreur lors de la création !");
-  //   }
-  // };
 
   return (
     <div className="login-container">
@@ -105,7 +112,7 @@ const handleSubmit = async (e) => {
                 className="toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? "🙈" : "👁️"}
+                {showPassword ? "🙈" : "🐵"}
               </button>
             </div>
           </div>
