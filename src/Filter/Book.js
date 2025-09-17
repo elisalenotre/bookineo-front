@@ -2,7 +2,7 @@ import React from 'react';
 import books from './BookData';
 
 
-const Book = ({title, author, description, price}) => {
+const Book = ({title, author, description, price, genre, status}) => {
 
     return(
         <div className='box book-box'>
@@ -13,6 +13,10 @@ const Book = ({title, author, description, price}) => {
             <strong>Résumé :</strong> {description}
              <br />
             <strong>Prix :</strong> {price}
+            <br />
+            <strong>Genre :</strong> {genre}
+            <br />
+            <strong>Status :</strong> {status}
         </div>
     )
 }

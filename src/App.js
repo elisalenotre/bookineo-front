@@ -4,11 +4,27 @@ import SignIn from "./authentification/SignIn";
 import SignUp from "./authentification/SignUp";
 import ForgotPassword from "./authentification/ForgotPassword";
 import Home from "./Filter/Home";
+import books from '././Filter/BookData';
 import './authentification/SignIn.css'
 import Profile from "./profile/Profile";
 import Navbar from "./navbar/Navbar";   
 
+const dataMinPrice = Math.min(...books.map(book => book.price));
+const dataMaxPrice = Math.max(...books.map(book => book.price));
+
+
 function App() {
+  const [minPrice, setMinPrice] = useState(dataMinPrice);
+  const [maxPrice, setMaxPrice] = useState(dataMaxPrice);
+
+  const handleMinPriceChange = (newMinPrice) => {
+    setMinPrice(newMinPrice);
+  };
+
+  const handleMaxPriceChange = (newMaxPrice) => {
+    setMaxPrice(newMaxPrice);
+  };
+
   const [isLoggedIn, setIsLoggedIn] = useState(true); // "true" pour tester le bouton Profil dans la Navbar
 
   const handleLogout = () => {
@@ -28,7 +44,14 @@ function App() {
         />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/home" element={< Home/>} />
+        <Route path="/home" element={<Home
+                minPrice={minPrice}
+                maxPrice={maxPrice}
+                onMinPriceChange={handleMinPriceChange}
+                onMaxPriceChange={handleMaxPriceChange}
+              />
+        } 
+          />
 
         <Route path="/profile" element={< Profile/>} />
 
