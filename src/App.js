@@ -9,6 +9,7 @@ import './authentification/SignIn.css'
 import Profile from "./profile/Profile";
 import Navbar from "./navbar/Navbar";  
 import Restitution from "./restitution/Restitution";  
+import Historique from "./historique/Historique";  
 
 
 const dataMinPrice = Math.min(...books.map(book => book.price));
@@ -59,6 +60,7 @@ function App() {
 
         <Route path="/profile" element={< Profile/>} />
         <Route path="/restitution" element={< Restitution/>} />
+        <Route path="/historique" element={< Historique/>} />
 
       </Routes>
     </Router>
