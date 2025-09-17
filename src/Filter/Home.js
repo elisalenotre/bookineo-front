@@ -8,6 +8,9 @@ import books from './BookData';
 
 const Home = ({minPrice, maxPrice, onMinPriceChange, onMaxPriceChange }) => {
   const [searchInput, setSearchInput] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [availability, setAvailability] = useState(null);
+  const [author, setAuthor] = useState("");
 
   return (
     <div>
@@ -23,10 +26,22 @@ const Home = ({minPrice, maxPrice, onMinPriceChange, onMaxPriceChange }) => {
         onMinPriceChange={onMinPriceChange}
         onMaxPriceChange={onMaxPriceChange}
       />
-      <SearchFilters />
+      <SearchFilters
+        selectedGenre={selectedGenre}
+        setSelectedGenre={setSelectedGenre}
+        availability={availability}
+        setAvailability={setAvailability}
+        author={author}
+        setAuthor={setAuthor}
+      />
 
-      <BookList 
-      minPrice={minPrice} maxPrice={maxPrice} searchInput={searchInput}
+      <BookList
+        minPrice={minPrice}
+        maxPrice={maxPrice}
+        searchInput={searchInput}
+        selectedGenre={selectedGenre}
+        availability={availability}
+        author={author}
       />
     </div>
   );

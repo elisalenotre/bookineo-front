@@ -2,16 +2,20 @@ import React from "react";
 import books from './BookData';
 import Genre from './Genre'
     
-    const GenreList = () => {
+    const GenreList = ({ selectedGenre, setSelectedGenre }) => {
+    const uniqueGenres = [...new Set(books.map(book => book.genre))];
+
     return(
         <div className="box selector-box">
             <h3>Choisissez un genre :</h3>
-            <select className='select-bar'>
+            <select className='select-bar'
+                value={selectedGenre}
+                onChange={e => setSelectedGenre(e.target.value)}
+            >
                 
-                {books.map((genre, index) => (
-                <Genre
-                 genre={genre.genre}
-                />  
+                <option value="">Tous</option>
+                {uniqueGenres.map((genre, index) => (
+                <Genre key={index} genre={genre} />
                 ))}
             </select>
         </div>

@@ -6,7 +6,7 @@ const books = [
       description: 'john smith john smith',
       price: 4.99,
       genre: 'Policier',
-      status: 'Disponible'
+      available: true
     },
     { 
       id: 2, 
@@ -15,7 +15,7 @@ const books = [
       description: 'sarah connor sarah connor',
       price: 5,
       genre: 'Classique',
-      status: 'Disponible'
+      available: true
     },
     { 
       id: 3, 
@@ -24,7 +24,7 @@ const books = [
       description: 'CCCCCCCCCC',
       price: 20,
       genre: 'Comédie',
-      status: 'Indisponible'
+      available: false
     }
 ]
 
