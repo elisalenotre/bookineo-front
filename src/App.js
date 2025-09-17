@@ -30,6 +30,8 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/home" element={< Home/>} />
 
+        <Route path="/profile" element={< Profile/>} />
+
       </Routes>
     </Router>
     </div>
