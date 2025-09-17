@@ -2,10 +2,17 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import "./Navbar.css";
+import { logout } from "../api/auth";
 
 const Navbar = ({ isLoggedIn, onLogout, username }) => {
   const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    if (onLogout) onLogout();
+    navigate("/login");
+  };
 
   return (
     <nav className="navbar">

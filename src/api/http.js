@@ -5,7 +5,9 @@ const BASE_URL =
 // --- token store: localStorage (remember) ou sessionStorage ---
 export const tokenStore = {
   get() {
-    return localStorage.getItem("bookineo_token") || sessionStorage.getItem("bookineo_token");
+    const t = localStorage.getItem("bookineo_token") || sessionStorage.getItem("bookineo_token");
+    if (t && isExpired(t)) { this.clear(); return null; }
+    return t;
   },
   set(token, remember) {
     if (remember) {
@@ -47,4 +49,11 @@ export async function apiFetch(path, { method = "GET", body, auth = false } = {}
     throw err;
   }
   return data;
+}
+
+function isExpired(token) {
+  try {
+    const { exp } = JSON.parse(atob(token.split(".")[1]));
+    return exp * 1000 < Date.now();
+  } catch { return true; }
 }

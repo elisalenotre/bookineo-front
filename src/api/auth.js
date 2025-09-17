@@ -11,7 +11,7 @@ export async function registerUser({ email, password, first_name, last_name }) {
 export async function loginUser({ email, password, rememberMe }) {
   const data = await apiFetch("/api/auth/login", {
     method: "POST",
-    body: { email, password },
+    body: { email, password, remember_me: !!rememberMe},
   });
   tokenStore.set(data.token, !!rememberMe);
   return data.token;
