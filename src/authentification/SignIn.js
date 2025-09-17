@@ -64,7 +64,7 @@ export default function SignIn() {
                 className="toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? "👁️" : "🙈"}
+                {showPassword ? "🐵" : "🙈"} 
               </button>
             </div>
             <Link to="/forgot-password" className="link forgot-link">
@@ -72,6 +72,7 @@ export default function SignIn() {
             </Link>
           </div>
 
+          {/* Checkbox "Se souvenir de moi" 👁️*/}
           <div className="checkbox">
             <input
               className="input"

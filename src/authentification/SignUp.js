@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser, loginUser } from "../api/auth";
 
@@ -56,7 +57,6 @@ export default function SignUp() {
               placeholder="Charles"
               value={nom}
               onChange={(e) => setNom(e.target.value)}
-              required
             />
           </div>
 
@@ -68,7 +68,6 @@ export default function SignUp() {
               placeholder="Leclerc"
               value={prenom}
               onChange={(e) => setPrenom(e.target.value)}
-              required
             />
           </div>
 
@@ -100,7 +99,7 @@ export default function SignUp() {
                 className="toggle toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? "🙈" : "👁️"}
+                {showPassword ? "🙈" : "🐵"}
               </button>
             </div>
           </div>
