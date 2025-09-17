@@ -1,0 +1,98 @@
+.return-book {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #eef2f6; 
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08); 
+  font-family: 'Arial', sans-serif;
+  color: #222;
+}
+
+.return-book h2 {
+  text-align: center;
+  color: #222; 
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.return-book label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  color: #444; 
+}
+
+.return-book select,
+.return-book input[type="date"],
+.return-book textarea {
+  width: 100%;
+  padding: 0.75rem 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #cfcfcf;
+  border-radius: 10px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.return-book select:focus,
+.return-book input[type="date"]:focus,
+.return-book textarea:focus {
+  outline: none;
+  border-color: #4c7bff;
+  box-shadow: 0 0 0 3px rgba(76, 123, 255, 0.08);
+}
+
+.return-book textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.return-book button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #4c7bff; 
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.return-book button:hover {
+  background-color: #365fcc; 
+}
+
+.return-book .book-status {
+  margin-top: 1rem;
+  padding: 0.6rem; 
+  background-color: #d4edda; 
+  color: #155724;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.return-book .history {
+  margin-top: 2rem;
+}
+
+.return-book .history h3 {
+  color: #222;
+  margin-bottom: 0.8rem;
+}
+
+.return-book .history ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.return-book .history li {
+  padding: 0.5rem 0.8rem;
+  margin-bottom: 0.5rem;
+  background-color: #eef2f6; 
+  border-radius: 8px;
+}

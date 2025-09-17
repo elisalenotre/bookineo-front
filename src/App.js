@@ -7,7 +7,9 @@ import Home from "./Filter/Home";
 import books from '././Filter/BookData';
 import './authentification/SignIn.css'
 import Profile from "./profile/Profile";
-import Navbar from "./navbar/Navbar";   
+import Navbar from "./navbar/Navbar";  
+import Restitution from "./restitution/Restitution";  
+
 
 const dataMinPrice = Math.min(...books.map(book => book.price));
 const dataMaxPrice = Math.max(...books.map(book => book.price));
@@ -54,6 +56,9 @@ function App() {
           />
 
         <Route path="/profile" element={< Profile/>} />
+
+        <Route path="/profile" element={< Profile/>} />
+        <Route path="/restitution" element={< Restitution/>} />
 
       </Routes>
     </Router>
