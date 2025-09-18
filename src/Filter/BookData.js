@@ -1,7 +1,7 @@
 const books = [
     { 
       id: 1, 
-      title: 'JohnSmith', 
+      title: 'Le viel homme et la mer', 
       author: 'John Smith', 
       description: 'john smith john smith',
       price: 4.99,

@@ -2,7 +2,7 @@ import React from "react";
 
 function RadioSelector({ availability, setAvailability }) {
     return(
-        <div className="box selector-box">
+        <div className="selector-box">
             <h3>Filtrer par status</h3>
 
                 <input

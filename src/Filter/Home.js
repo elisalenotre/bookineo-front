@@ -4,6 +4,10 @@ import PriceSelector from './PriceSelector';
 import SearchBar from './SearchBar';
 import SearchFilters from './SearchFilters';
 import books from './BookData';
+import RadioSelector from "./RadioSelector";
+import SelectBar from "./SelectBar";
+import AutocompleteSearch from "./AutocompleteSearch";
+
 
 
 const Home = ({minPrice, maxPrice, onMinPriceChange, onMaxPriceChange }) => {
@@ -13,37 +17,49 @@ const Home = ({minPrice, maxPrice, onMinPriceChange, onMaxPriceChange }) => {
   const [author, setAuthor] = useState("");
 
   return (
-    <div>
-      <h1>Location de livres</h1>
-      <SearchBar
-        searchInput={searchInput} setSearchInput={setSearchInput}   
-      >
-      </SearchBar>
-      
-      <PriceSelector
-        minPrice={minPrice}
-        maxPrice={maxPrice}
-        onMinPriceChange={onMinPriceChange}
-        onMaxPriceChange={onMaxPriceChange}
-      />
-      <SearchFilters
-        selectedGenre={selectedGenre}
-        setSelectedGenre={setSelectedGenre}
-        availability={availability}
-        setAvailability={setAvailability}
-        author={author}
-        setAuthor={setAuthor}
-      />
+      <div>
+        <h1>Location de livres entre particuliers</h1>
+        <div className="search-sidebar box">
+          <div className="searchbars">
+            <SearchBar
+              searchInput={searchInput} setSearchInput={setSearchInput}   
+            >
+            </SearchBar>
 
-      <BookList
-        minPrice={minPrice}
-        maxPrice={maxPrice}
-        searchInput={searchInput}
-        selectedGenre={selectedGenre}
-        availability={availability}
-        author={author}
-      />
-    </div>
+            <AutocompleteSearch 
+            author={author} setAuthor={setAuthor} 
+            />
+          </div>
+          
+          <div className="selectors">
+            <PriceSelector
+              minPrice={minPrice}
+              maxPrice={maxPrice}
+              onMinPriceChange={onMinPriceChange}
+              onMaxPriceChange={onMaxPriceChange}
+            />
+          <RadioSelector
+                  availability={availability} setAvailability={setAvailability} 
+              >
+              </RadioSelector>
+              
+              <SelectBar
+              selectedGenre={selectedGenre} setSelectedGenre={setSelectedGenre}
+              >
+              </SelectBar>
+          </div>
+
+        </div>
+
+          <BookList
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+            searchInput={searchInput}
+            selectedGenre={selectedGenre}
+            availability={availability}
+            author={author}
+          />
+      </div>
   );
 };
 

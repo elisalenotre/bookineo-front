@@ -6,9 +6,9 @@ import Genre from './Genre'
     const uniqueGenres = [...new Set(books.map(book => book.genre))];
 
     return(
-        <div className="box selector-box">
+        <div className="selector-box">
             <h3>Choisissez un genre :</h3>
-            <select className='select-bar'
+            <select className='select-bar input'
                 value={selectedGenre}
                 onChange={e => setSelectedGenre(e.target.value)}
             >
