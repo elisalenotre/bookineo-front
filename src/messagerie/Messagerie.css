@@ -1,0 +1,140 @@
+.message-page {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f0f4ff; /* bleu très clair */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+.message-page h2 {
+  text-align: center;
+  color: black;
+  margin-bottom: 1.5rem;
+}
+
+/* Tableau */
+.message-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  margin-bottom: 1.5rem;
+}
+
+.message-table th {
+  background-color: #4c7bff;
+  color: white;
+  padding: 0.8rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+.message-table td {
+  padding: 0.8rem;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Effet hover */
+.message-table tr:hover {
+  background-color: #e6ecff; 
+  cursor: pointer;
+}
+
+/* Styles pour lus / non lus */
+.message-table tr.unread td {
+  font-weight: bold;
+  color: black;
+}
+
+.message-table tr.read td {
+  color: gray;
+}
+
+/* Détail du message */
+.message-detail {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.message-detail h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #4c7bff;
+}
+
+.message-detail .date {
+  font-size: 0.85rem;
+  color: gray;
+  margin-bottom: 0.8rem;
+}
+
+
+.message-form {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.message-form h3 {
+  margin: 0;
+  margin-bottom: 0.5rem;
+  color: #4c7bff;
+}
+
+.message-form input,
+.message-form textarea {
+  padding: 0.6rem;
+  border: 1px solid #cfcfcf;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  resize: none;
+}
+
+.message-form button {
+  align-self: flex-end;
+  background: #4c7bff;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.message-form button:hover {
+  background: #345edb;
+}
+
+/* Le tableau */
+.message-table th {
+  background-color: #4c7bff;
+  color: white;
+  padding: 0.8rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+.message-table td {
+  padding: 0.8rem;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Détail du message */
+.message-detail h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #4c7bff;
+}

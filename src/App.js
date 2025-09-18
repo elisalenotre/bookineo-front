@@ -10,6 +10,8 @@ import Profile from "./profile/Profile";
 import Navbar from "./navbar/Navbar";  
 import Restitution from "./restitution/Restitution";  
 import Historique from "./historique/Historique";  
+import Messagerie from "./messagerie/Messagerie";  
+
 
 
 const dataMinPrice = Math.min(...books.map(book => book.price));
@@ -61,6 +63,8 @@ function App() {
         <Route path="/profile" element={< Profile/>} />
         <Route path="/restitution" element={< Restitution/>} />
         <Route path="/historique" element={< Historique/>} />
+        <Route path="/messagerie" element={< Messagerie/>} />
+
 
       </Routes>
     </Router>
