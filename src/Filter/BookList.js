@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Book from "./Book";
 import { fetchBooks, updateBook } from "../api/api";
 import { tokenStore } from "../api/http";
@@ -15,6 +15,7 @@ const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, 
           status: availability === true ? "available" : availability === false ? "rented" : null,
           price_min: minPrice,
           price_max: maxPrice,
+          genre: selectedGenre || null,
         });
         setBooks(data.data || []);
       } catch (err) {

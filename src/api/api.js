@@ -3,13 +3,14 @@ import { apiFetch } from "./http";
 const BASE = (process.env.REACT_APP_API_URL || "http://127.0.0.1:8001");
 const API_URL = `${BASE}/api/books`;
 
-export async function fetchBooks({ q, author, status, price_min, price_max, page = 1, limit = 10 }) {
+export async function fetchBooks({ q, author, status, price_min, price_max, genre, page = 1, limit = 10 }) {
   const params = new URLSearchParams();
   if (q) params.append("q", q);
   if (author) params.append("author", author);
   if (status) params.append("status", status);           // 'available' | 'rented'
   if (price_min != null) params.append("price_min", price_min);
   if (price_max != null) params.append("price_max", price_max);
+  if (genre) params.append("genre", genre);  
   params.append("page", page);
   params.append("limit", limit);
 
@@ -45,4 +46,11 @@ export async function deleteBook(id) {
   const res = await fetch(`${API_URL}/${id}`, { method: "DELETE", mode: "cors" });
   if (!res.ok) throw new Error("Erreur suppression");
   return true;
+}
+
+export async function fetchGenres() {
+  const res = await fetch(`${API_URL}/genres`, { mode: "cors" });
+  if (!res.ok) throw new Error("Erreur genres");
+  const data = await res.json();   // { genres: [...] }
+  return data.genres || [];
 }
