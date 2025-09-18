@@ -9,7 +9,10 @@ const Navbar = ({ isLoggedIn, onLogout, username }) => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-logo">Bookineo</div>
+      {/* Logo qui redirige vers /home */}
+      <Link to="/home" className="navbar-logo">
+        Bookineo
+      </Link>
 
       <div className="navbar-right">
         {!isLoggedIn ? (
