@@ -20,8 +20,8 @@ const PriceSelector = ({
 
   return (
     <div>
-      <div className="price-input-container">
-        <div className="price-input box">
+      <div className="price-input-container selector-box">
+        <div className="price-input">
           <h3>Choisissez une fourchette de prix :</h3>
 
           <div className="price-fields">

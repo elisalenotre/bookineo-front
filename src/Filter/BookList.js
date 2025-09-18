@@ -1,31 +1,52 @@
-import React from 'react';
-import Book from './Book';
-import books from './BookData';
-import SearchBar from './SearchBar';  
-import AutocompleteSearch from './AutocompleteSearch';
-import SelectBar from './SelectBar';
+import { useEffect, useState } from "react";
+import Book from "./Book";
+import { fetchBooks, updateBook } from "../api/api";
+import { tokenStore } from "../api/http";
 
-const BookList = ({ minPrice, maxPrice, searchInput, selectedGenre, availability, author }) => {
-  const filteredBooks = books.filter((book) => {
-  const inPriceRange = book.price >= minPrice && book.price <= maxPrice;
-  const matchesSearch = book.title.toLowerCase().includes(searchInput.toLowerCase());
-  const matchesGenre = selectedGenre ? book.genre === selectedGenre : true;
-  const matchesAvailability = availability !== null ? book.available === availability : true;
-  const matchesAuthor = author ? book.author.toLowerCase().includes(author.toLowerCase()) : true;
-  return inPriceRange && matchesSearch && matchesGenre && matchesAvailability && matchesAuthor;
-});
+const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, maxPrice }) => {
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    const loadBooks = async () => {
+      try {
+        const data = await fetchBooks({
+          q: searchInput,
+          author,
+          status: availability === true ? "available" : availability === false ? "rented" : null,
+          price_min: minPrice,
+          price_max: maxPrice,
+          genre: selectedGenre || null,
+        });
+        setBooks(data.data || []);
+      } catch (err) {
+        console.error("Erreur chargement livres:", err);
+      }
+    };
+    loadBooks();
+  }, [searchInput, author, availability, minPrice, maxPrice, selectedGenre]);
+
+    async function handleRent(id) {
+      try {
+        if (!tokenStore.get()) { alert("Connecte-toi pour emprunter."); return; }
+        await updateBook(id, { status: "rented" });
+        setBooks(bs => bs.map(b => (b.id === id ? { ...b, status: "rented" } : b)));
+      } catch (e) {
+        alert(e.message || "Erreur lors de l'emprunt (auth requise ?)");
+      }
+    }
 
   return (
     <ul className="book-list">
-      {filteredBooks.map((book, index) => (
-        <li key={index} className="contact-line">
+      {books.map((book) => (
+        <li key={book.id}>
           <Book
             title={book.title}
             author={book.author}
             description={book.description}
             price={book.price}
             genre={book.genre}
-            status={book.available ? "Disponible" : "Indisponible"}
+            status={book.status}
+            onRent={() => handleRent(book.id)}
           />
         </li>
       ))}
