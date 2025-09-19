@@ -10,6 +10,7 @@ import AutocompleteSearch from "./AutocompleteSearch";
 import Chatbot from "../ChatBot/ChatBot";
 
 
+
 const Home = ({minPrice, maxPrice, onMinPriceChange, onMaxPriceChange }) => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
