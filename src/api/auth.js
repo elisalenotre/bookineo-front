@@ -1,4 +1,3 @@
-// src/api/auth.js
 import { tokenStore } from "./http";
 
 const BASE = process.env.REACT_APP_API_URL || "http://127.0.0.1:8001";
@@ -14,12 +13,10 @@ export async function loginUser({ email, password, rememberMe }) {
   if (!res.ok) throw new Error("Identifiants invalides");
   const data = await res.json();
 
-  // ton back peut renvoyer {token: "..."} ou {jwt: "..."} → on gère les 2
   const token = data.token || data.jwt || data.access_token;
   if (!token) throw new Error("Token manquant dans la réponse");
-  tokenStore.set(token);                         // <-- on stocke le JWT ici
+  tokenStore.set(token);                      
 
-  // optionnel : mémoriser l’email si "Se souvenir de moi"
   if (rememberMe) localStorage.setItem("current_user_email", email);
   else localStorage.removeItem("current_user_email");
 

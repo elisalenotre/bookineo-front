@@ -10,7 +10,7 @@ export default function Historique() {
   useEffect(() => {
     (async () => {
       try {
-        const list = await fetchHistory(); // renvoie directement un []
+        const list = await fetchHistory();
         setRows(Array.isArray(list) ? list : []);
       } catch (e) {
         console.error(e);

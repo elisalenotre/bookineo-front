@@ -9,7 +9,6 @@
   font-family: 'Arial', sans-serif;
 }
 
-/* ====== Sidebar ====== */
 .sidebar {
   width: 250px;
   background: white;
@@ -72,7 +71,6 @@
   background: #345edb;
 }
 
-/* ====== Menu contextuel ====== */
 .menu-wrapper {
   position: relative;
 }
@@ -121,7 +119,6 @@
   color: red;
 }
 
-/* ====== Zone principale (chat) ====== */
 .chat-page {
   flex: 1;
   display: flex;
@@ -143,7 +140,6 @@
   font-style: italic;
 }
 
-/* ====== Messages ====== */
 .chat-box {
   flex: 1;
   overflow-y: auto;
@@ -254,7 +250,6 @@
   background: #345edb;
 }
 
-/* Actions pour "nouvelle discussion" */
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -276,7 +271,6 @@
   background: #999;
 }
 
-/* fleche mobile */
 .chat-header {
   display: flex;
   align-items: center;
@@ -290,7 +284,6 @@
 }
 
 
-/* ====== Mobile style type WhatsApp ====== */
 @media screen and (max-width: 700px) {
   .messagerie-container {
     flex-direction: column;

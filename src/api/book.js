@@ -7,7 +7,7 @@ export async function fetchBooks({ q, author, status, price_min, price_max, genr
   const params = new URLSearchParams();
   if (q) params.append("q", q);
   if (author) params.append("author", author);
-  if (status) params.append("status", status);           // 'available' | 'rented'
+  if (status) params.append("status", status); 
   if (price_min != null) params.append("price_min", price_min);
   if (price_max != null) params.append("price_max", price_max);
   if (genre) params.append("genre", genre);  
@@ -19,7 +19,7 @@ export async function fetchBooks({ q, author, status, price_min, price_max, genr
     const txt = await res.text().catch(() => "Erreur API");
     throw new Error(txt || "Erreur API");
   }
-  return res.json(); // => { data, page, limit }
+  return res.json(); 
 }
 
 export async function createBook(data) {
@@ -31,7 +31,6 @@ export async function createBook(data) {
 }
 
 export async function updateBook(id, patch) {
-  // PUT protégé → envoie le token automatiquement grâce à apiFetch({auth:true})
   return apiFetch(`/api/books/${id}`, {
     method: "PUT",
     body: patch,
@@ -54,7 +53,6 @@ export async function fetchGenres() {
   return data.genres || [];
 }
 
-// --- louer / rendre ---
 export async function rentBookById(id, { renter_email, start_date }) {
   return apiFetch(`/api/books/${id}/rent`, {
     method: "POST",
@@ -74,7 +72,7 @@ export async function returnBookById(id, { return_date, comment }) {
 /**
  * Récupère les livres loués.
  * @param {Object} opts
- * @param {boolean} opts.onlyMine - si true, uniquement ceux loués par l'utilisateur courant
+ * @param {boolean} opts.onlyMine
  * @param {number} opts.page
  * @param {number} opts.limit
  * @returns {Promise<Array>}

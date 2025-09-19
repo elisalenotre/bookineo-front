@@ -11,10 +11,7 @@ export default function ReturnBook() {
   useEffect(() => {
     (async () => {
       try {
-        // si tu as l’email en localStorage après login, tu peux filtrer:
-        // const email = localStorage.getItem("current_user_email");
-        // const { data } = await fetchRentedBooks({ renter_email: email });
-        const list = await fetchRentedBooks(); // renvoie directement un []
+        const list = await fetchRentedBooks(); 
         setBooks(Array.isArray(list) ? list : []);
       } catch (e) {
         console.error(e);
@@ -30,7 +27,6 @@ export default function ReturnBook() {
     }
     try {
       await returnBookById(selectedBookId, { return_date: returnDate, comment });
-      // optimiste : maj local
       setBooks(prev => prev.filter(b => b.id !== Number(selectedBookId)));
       setSelectedBookId("");
       setReturnDate("");

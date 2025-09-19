@@ -8,13 +8,10 @@ import AutocompleteSearch from "./AutocompleteSearch";
 import ChatBox from '../chatbox/ChatBox';
 
 const Home = () => {
-  // filtres texte
   const [searchInput, setSearchInput] = useState("");
   const [author, setAuthor] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
-  const [availability, setAvailability] = useState(null); // true=available, false=rented, null=tout
-
-  // filtres prix (défauts raisonnables)
+  const [availability, setAvailability] = useState(null); 
   const dataMinPrice = 0;
   const dataMaxPrice = 500;
   const [minPrice, setMinPrice] = useState(0);
@@ -70,4 +67,7 @@ const Home = () => {
   );
 };
 
+
 export default Home;
+
+

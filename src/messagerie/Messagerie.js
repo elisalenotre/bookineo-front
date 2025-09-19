@@ -8,9 +8,9 @@ import {
 } from "../api/messages";
 
 export default function Messagerie() {
-  const [convos, setConvos] = useState([]);            // [{with, last_preview, last_date, is_read}]
+  const [convos, setConvos] = useState([]);          
   const [selectedUser, setSelectedUser] = useState(null);
-  const [conversation, setConversation] = useState([]); // messages de la conv courante
+  const [conversation, setConversation] = useState([]); 
   const [unreadCount, setUnreadCount] = useState(0);
   const [newMsg, setNewMsg] = useState({ to: "", content: "" });
   const [showNewChat, setShowNewChat] = useState(false);
@@ -28,11 +28,9 @@ export default function Messagerie() {
     setShowNewChat(false);
     const res = await getConversationWith(userEmail);
     setConversation(res.data || []);
-    // affichage mobile
     if (window.innerWidth <= 700) {
       document.querySelector(".messagerie-container")?.classList.add("show-chat");
     }
-    // refresh la liste (certains deviennent lus)
     refreshLeft();
   }
 
@@ -40,7 +38,6 @@ export default function Messagerie() {
   useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); },
     [conversation, selectedUser]);
 
-  // auto-refresh du compteur (bonus)
   useEffect(() => {
     const id = setInterval(refreshLeft, 10000);
     return () => clearInterval(id);
@@ -52,7 +49,6 @@ export default function Messagerie() {
     if (!to || !newMsg.content.trim()) return;
     await sendMessage(to, newMsg.content.trim());
     setNewMsg({ to: showNewChat ? "" : to, content: "" });
-    // recharge la conversation
     await openConversation(to);
   };
 
@@ -63,7 +59,6 @@ export default function Messagerie() {
 
   return (
     <div className="messagerie-container">
-      {/* sidebar */}
       <div className="sidebar">
         <h3>Discussions {unreadCount > 0 ? `(${unreadCount})` : ""}</h3>
         <ul>
@@ -93,7 +88,6 @@ export default function Messagerie() {
         </button>
       </div>
 
-      {/* zone chat */}
       <div className="chat-page">
         {showNewChat ? (
           <form className="chat-form new-chat-form" onSubmit={handleSend}>
@@ -135,7 +129,7 @@ export default function Messagerie() {
 
             <div className="chat-box">
               {conversation.map(msg => {
-                const me = msg.from !== selectedUser; // simple heuristique
+                const me = msg.from !== selectedUser; 
                 return (
                   <div key={msg.id} className={`chat-message ${me ? "sent" : "received"}`}>
                     <div className="bubble">

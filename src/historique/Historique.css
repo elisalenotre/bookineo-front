@@ -69,7 +69,7 @@
 
   .history-table {
     display: block;
-    overflow-x: auto; /* scroll horizontal si trop de colonnes */
+    overflow-x: auto;
     white-space: nowrap;
   }
 }

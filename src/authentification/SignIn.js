@@ -72,7 +72,6 @@ export default function SignIn() {
             </Link>
           </div>
 
-          {/* Checkbox "Se souvenir de moi" 👁️*/}
           <div className="checkbox">
             <input
               className="input"

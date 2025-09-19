@@ -5,20 +5,20 @@ const SearchBar = ({ searchInput, setSearchInput }) => {
     setSearchInput(e.target.value);
   };
 
-    return(
-        <div>
-            <h3>Rechercher un livre</h3>
-            <div className="search-bar-section">
-                <input 
-                    type="search"
-                    className="input search-bar" 
-                    onChange={handleChange}
-                    value={searchInput} 
-                    placeholder="rechercher le titre"
-                />
-            </div>
-        </div>
-    )
+  return (
+    <div className="selector-box"> 
+      <h3>Rechercher un livre :</h3>
+      <div className="search-bar-section">
+        <input 
+          type="search"
+          className="input search-bar" 
+          onChange={handleChange}
+          value={searchInput} 
+          placeholder="rechercher le titre"
+        />
+      </div>
+    </div>
+  );
 }
-    
-    export default SearchBar;
+
+export default SearchBar;
