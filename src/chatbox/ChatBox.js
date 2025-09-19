@@ -54,7 +54,7 @@ export default function ChatBox() {
           .filter((m) => m.role !== "system")
           .map((msg, idx) => (
             <div key={idx} className={`msg ${msg.role}`}>
-              <strong>{msg.role === "user" ? "Vous" : "IA"}:</strong> {msg.content}
+              <strong>{msg.role === "user" ? "Vous" : "Assitant Bookineo"}:</strong> {msg.content}
             </div>
           ))}
         {loading && <div className="msg assistant">...</div>}
