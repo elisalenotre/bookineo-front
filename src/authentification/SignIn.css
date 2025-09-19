@@ -23,7 +23,6 @@ p{
   background-color: #eef2f6;
   padding: 1rem;
   border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
 }
 
 .login-box {
@@ -319,3 +318,84 @@ p{
 .disabled:hover{
   background-color: #aaa;
 }
+
+/* chatbox */
+.chatbox {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+  padding: 10px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  right: 1rem;
+  overflow-wrap: break-word;
+}
+
+.open{
+  height: 500px;
+  max-width: 400px;
+}
+
+.closed{
+  height: 50px;
+  box-shadow: none;
+}
+
+.closed > .chat-input, .closed > .chat-messages{
+  display: none;
+}
+
+.closed .close-icon{
+  display: none;
+}
+
+.open .chat-icon{
+  display: none;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.chat-input input{
+  border-radius: 10px 0 0 10px;
+}
+
+.msg {
+  margin: 5px 0;
+}
+
+.msg.user {
+  text-align: right;
+  color: blue;
+}
+
+.msg.assistant {
+  text-align: left;
+  color: green;
+}
+
+.btn-close{
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  line-height: 0.4;
+}
+
+.open .btn-close{
+  max-width: 40px;
+  aspect-ratio: 1/1;
+}
+
+.btn-chatbox{
+  padding: 0.5rem;
+  border: 1px solid #4c7bff;
+  border-radius: 0 10px 10px 0;
+}
+
+}
+
