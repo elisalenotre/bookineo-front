@@ -1,384 +1,81 @@
-// import React, { useState, useEffect, useRef } from "react";
-// import "./Messagerie.css";
-
-// function Messagerie() {
-//   const [messages, setMessages] = useState([]);
-//   const [selectedUser, setSelectedUser] = useState(null);
-//   const [newMessage, setNewMessage] = useState({
-//     sender: "Moi",
-//     receiver: "",
-//     content: "",
-//   });
-//   const [showNewChat, setShowNewChat] = useState(false);
-//   const [openMenu, setOpenMenu] = useState(null);
-
-//   const chatEndRef = useRef(null);
-
-//   useEffect(() => {
-//     // simulation données
-//     const fakeMessages = [
-//       {
-//         id: 1,
-//         sender: "Alice",
-//         receiver: "Moi",
-//         date: "2025-09-18 10:15",
-//         content: "Bonjour, j’aimerais réserver un livre.",
-//       },
-//       {
-//         id: 2,
-//         sender: "Moi",
-//         receiver: "Alice",
-//         date: "2025-09-18 10:17",
-//         content: "Salut Alice, aucun problème 🙂 Quel livre veux-tu ?",
-//       },
-//       {
-//         id: 3,
-//         sender: "Bob",
-//         receiver: "Moi",
-//         date: "2025-09-18 11:00",
-//         content: "Est-ce que vous avez des mangas disponibles ?",
-//       },
-//     ];
-//     setMessages(fakeMessages);
-//   }, []);
-
-//   useEffect(() => {
-//     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-//   }, [messages, selectedUser]);
-
-//   // ferme le menu si on clique ailleurs
-//   useEffect(() => {
-//     const handleClickOutside = () => setOpenMenu(null);
-//     window.addEventListener("click", handleClickOutside);
-//     return () => window.removeEventListener("click", handleClickOutside);
-//   }, []);
-
-//   const users = Array.from(
-//     new Set(messages.map((m) => (m.sender === "Moi" ? m.receiver : m.sender)))
-//   );
-
-//   const conversation = messages.filter(
-//     (m) => m.sender === selectedUser || m.receiver === selectedUser
-//   );
-
-//   const handleSend = (e) => {
-//     e.preventDefault();
-//     if (!newMessage.receiver || !newMessage.content.trim()) return;
-
-//     const message = {
-//       id: Date.now(),
-//       sender: newMessage.sender,
-//       receiver: newMessage.receiver,
-//       date: new Date().toLocaleString(),
-//       content: newMessage.content,
-//     };
-
-//     setMessages([...messages, message]);
-//     setNewMessage({ sender: "Moi", receiver: newMessage.receiver, content: "" });
-//     setShowNewChat(false);
-//     if (!selectedUser) setSelectedUser(newMessage.receiver);
-//   };
-
-//   return (
-//     <div className="messagerie-container">
-//       {/* Liste discussions */}
-//       <div className="sidebar">
-//         <h3>Discussions</h3>
-//         <ul>
-//           {users.map((user) => (
-//             <li
-//               key={user}
-//               className={user === selectedUser ? "active" : ""}
-//             >
-//               <span
-//                 className="user-name"
-//                 onClick={() => {
-//                   setSelectedUser(user);
-//                   setNewMessage({ ...newMessage, receiver: user });
-//                   setShowNewChat(false);
-//                 }}
-//               >
-//                 {user}
-//               </span>
-
-//               <div
-//                 className="menu-wrapper"
-//                 onClick={(e) => e.stopPropagation()} 
-//               >
-//                 <button
-//                   className="menu-btn"
-//                   onClick={() => setOpenMenu(openMenu === user ? null : user)}
-//                 >
-//                   ⋮
-//                 </button>
-
-//                 {openMenu === user && (
-//                   <div className="submenu">
-//                     <button
-//                       onClick={() => {
-//                         setMessages(
-//                           messages.filter(
-//                             (m) => !(m.sender === user || m.receiver === user)
-//                           )
-//                         );
-//                         if (selectedUser === user) setSelectedUser(null);
-//                         setOpenMenu(null);
-//                       }}
-//                     >
-//                       Supprimer la discussion
-//                     </button>
-//                   </div>
-//                 )}
-//               </div>
-//             </li>
-//           ))}
-//         </ul>
-
-//         <button
-//           className="new-chat-btn"
-//           onClick={() => {
-//             setShowNewChat(true);
-//             setSelectedUser(null);
-//             setNewMessage({ sender: "Moi", receiver: "", content: "" });
-//           }}
-//         >
-//           + Nouvelle discussion
-//         </button>
-//       </div>
-
-//       {/* chat */}
-//       <div className="chat-page">
-//         {showNewChat ? (
-//           <form className="chat-form new-chat-form" onSubmit={handleSend}>
-//             <h2>Nouvelle discussion</h2>
-//             <input
-//               type="text"
-//               placeholder="Nom du destinataire"
-//               value={newMessage.receiver}
-//               onChange={(e) =>
-//                 setNewMessage({ ...newMessage, receiver: e.target.value })
-//               }
-//             />
-//             <textarea
-//               rows="2"
-//               placeholder="Votre message..."
-//               value={newMessage.content}
-//               onChange={(e) =>
-//                 setNewMessage({ ...newMessage, content: e.target.value })
-//               }
-//             />
-//             <div className="form-actions">
-//               <button
-//                 type="button"
-//                 className="cancel-btn"
-//                 onClick={() => setShowNewChat(false)}
-//               >
-//                 Annuler
-//               </button>
-//               <button type="submit">Envoyer</button>
-//             </div>
-//           </form>
-//         ) : selectedUser ? (
-//           <>
-//             <h2>Conversation avec {selectedUser}</h2>
-//             <div className="chat-box">
-//               {conversation.map((msg) => (
-//                 <div
-//                   key={msg.id}
-//                   className={`chat-message ${
-//                     msg.sender === "Moi" ? "sent" : "received"
-//                   }`}
-//                 >
-//                   <div className="bubble">
-//                     <span className="author">{msg.sender}</span>
-//                     <p>{msg.content}</p>
-//                     <span className="meta">{msg.date}</span>
-//                   </div>
-//                 </div>
-//               ))}
-//               <div ref={chatEndRef} />
-//             </div>
-
-//             <form className="chat-form" onSubmit={handleSend}>
-//               <textarea
-//                 rows="2"
-//                 placeholder="Votre message..."
-//                 value={newMessage.content}
-//                 onChange={(e) =>
-//                   setNewMessage({ ...newMessage, content: e.target.value })
-//                 }
-//               />
-//               <button type="submit">Envoyer</button>
-//             </form>
-//           </>
-//         ) : (
-//           <div className="no-chat">Sélectionnez une discussion</div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Messagerie;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Messagerie.css";
+import {
+  getConversations,
+  getConversationWith,
+  sendMessage,
+  getUnreadCount,
+} from "../api/messages";
 
-function Messagerie() {
-  const [messages, setMessages] = useState([]);
+export default function Messagerie() {
+  const [convos, setConvos] = useState([]);            // [{with, last_preview, last_date, is_read}]
   const [selectedUser, setSelectedUser] = useState(null);
-  const [newMessage, setNewMessage] = useState({
-    sender: "Moi",
-    receiver: "",
-    content: "",
-  });
+  const [conversation, setConversation] = useState([]); // messages de la conv courante
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [newMsg, setNewMsg] = useState({ to: "", content: "" });
   const [showNewChat, setShowNewChat] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
-
   const chatEndRef = useRef(null);
 
-  useEffect(() => {
-    // simulation données
-    const fakeMessages = [
-      {
-        id: 1,
-        sender: "Alice",
-        receiver: "Moi",
-        date: "2025-09-18 10:15",
-        content: "Bonjour, j’aimerais réserver un livre.",
-      },
-      {
-        id: 2,
-        sender: "Moi",
-        receiver: "Alice",
-        date: "2025-09-18 10:17",
-        content: "Salut Alice, aucun problème 🙂 Quel livre veux-tu ?",
-      },
-      {
-        id: 3,
-        sender: "Bob",
-        receiver: "Moi",
-        date: "2025-09-18 11:00",
-        content: "Est-ce que vous avez des mangas disponibles ?",
-      },
-    ];
-    setMessages(fakeMessages);
-  }, []);
+  async function refreshLeft() {
+    const [c, u] = await Promise.all([getConversations(), getUnreadCount()]);
+    setConvos(c.data || []);
+    setUnreadCount(u.unread || 0);
+  }
 
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, selectedUser]);
-
-  // ferme le menu si on clique ailleurs
-  useEffect(() => {
-    const handleClickOutside = () => setOpenMenu(null);
-    window.addEventListener("click", handleClickOutside);
-    return () => window.removeEventListener("click", handleClickOutside);
-  }, []);
-
-  const users = Array.from(
-    new Set(messages.map((m) => (m.sender === "Moi" ? m.receiver : m.sender)))
-  );
-
-  const conversation = messages.filter(
-    (m) => m.sender === selectedUser || m.receiver === selectedUser
-  );
-
-  const handleSend = (e) => {
-    e.preventDefault();
-    if (!newMessage.receiver || !newMessage.content.trim()) return;
-
-    const message = {
-      id: Date.now(),
-      sender: newMessage.sender,
-      receiver: newMessage.receiver,
-      date: new Date().toLocaleString(),
-      content: newMessage.content,
-    };
-
-    setMessages([...messages, message]);
-    setNewMessage({ sender: "Moi", receiver: newMessage.receiver, content: "" });
+  async function openConversation(userEmail) {
+    setSelectedUser(userEmail);
     setShowNewChat(false);
-    if (!selectedUser) setSelectedUser(newMessage.receiver);
-  };
-
-  const handleUserClick = (user) => {
-    setSelectedUser(user);
-    setNewMessage({ ...newMessage, receiver: user });
-    setShowNewChat(false);
-
+    const res = await getConversationWith(userEmail);
+    setConversation(res.data || []);
     // affichage mobile
     if (window.innerWidth <= 700) {
-      document.querySelector(".messagerie-container").classList.add("show-chat");
+      document.querySelector(".messagerie-container")?.classList.add("show-chat");
     }
+    // refresh la liste (certains deviennent lus)
+    refreshLeft();
+  }
+
+  useEffect(() => { refreshLeft(); }, []);
+  useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: "smooth" }); },
+    [conversation, selectedUser]);
+
+  // auto-refresh du compteur (bonus)
+  useEffect(() => {
+    const id = setInterval(refreshLeft, 10000);
+    return () => clearInterval(id);
+  }, []);
+
+  const handleSend = async (e) => {
+    e.preventDefault();
+    const to = showNewChat ? newMsg.to : selectedUser;
+    if (!to || !newMsg.content.trim()) return;
+    await sendMessage(to, newMsg.content.trim());
+    setNewMsg({ to: showNewChat ? "" : to, content: "" });
+    // recharge la conversation
+    await openConversation(to);
   };
 
   const handleBackClick = () => {
     setSelectedUser(null);
-    document.querySelector(".messagerie-container").classList.remove("show-chat");
+    document.querySelector(".messagerie-container")?.classList.remove("show-chat");
   };
 
   return (
     <div className="messagerie-container">
-      {/* Liste discussions */}
+      {/* sidebar */}
       <div className="sidebar">
-        <h3>Discussions</h3>
+        <h3>Discussions {unreadCount > 0 ? `(${unreadCount})` : ""}</h3>
         <ul>
-          {users.map((user) => (
-            <li key={user} className={user === selectedUser ? "active" : ""}>
-              <span className="user-name" onClick={() => handleUserClick(user)}>
-                {user}
+          {convos.map(c => (
+            <li key={c.with} className={c.with === selectedUser ? "active" : ""}>
+              <span className="user-name" onClick={() => openConversation(c.with)}>
+                {c.with}
               </span>
-
-              <div className="menu-wrapper" onClick={(e) => e.stopPropagation()}>
-                <button
-                  className="menu-btn"
-                  onClick={() => setOpenMenu(openMenu === user ? null : user)}
-                >
-                  ⋮
-                </button>
-
-                {openMenu === user && (
-                  <div className="submenu">
-                    <button
-                      onClick={() => {
-                        setMessages(
-                          messages.filter(
-                            (m) => !(m.sender === user || m.receiver === user)
-                          )
-                        );
-                        if (selectedUser === user) handleBackClick();
-                        setOpenMenu(null);
-                      }}
-                    >
-                      Supprimer la discussion
-                    </button>
-                  </div>
-                )}
-              </div>
+              <span className={`preview ${c.is_read ? "read" : "unread"}`}>{c.last_preview}</span>
             </li>
           ))}
+          {convos.length === 0 && <li style={{opacity:.6}}>Aucune conversation</li>}
         </ul>
 
         <button
@@ -386,13 +83,9 @@ function Messagerie() {
           onClick={() => {
             setShowNewChat(true);
             setSelectedUser(null);
-            setNewMessage({ sender: "Moi", receiver: "", content: "" });
-
-            // affichage mobile
+            setNewMsg({ to: "", content: "" });
             if (window.innerWidth <= 700) {
-              document
-                .querySelector(".messagerie-container")
-                .classList.add("show-chat");
+              document.querySelector(".messagerie-container")?.classList.add("show-chat");
             }
           }}
         >
@@ -400,26 +93,24 @@ function Messagerie() {
         </button>
       </div>
 
-      {/* chat */}
+      {/* zone chat */}
       <div className="chat-page">
         {showNewChat ? (
           <form className="chat-form new-chat-form" onSubmit={handleSend}>
             <h2>Nouvelle discussion</h2>
             <input
-              type="text"
-              placeholder="Nom du destinataire"
-              value={newMessage.receiver}
-              onChange={(e) =>
-                setNewMessage({ ...newMessage, receiver: e.target.value })
-              }
+              type="email"
+              placeholder="email du destinataire"
+              value={newMsg.to}
+              onChange={(e) => setNewMsg({ ...newMsg, to: e.target.value })}
+              required
             />
             <textarea
               rows="2"
               placeholder="Votre message..."
-              value={newMessage.content}
-              onChange={(e) =>
-                setNewMessage({ ...newMessage, content: e.target.value })
-              }
+              value={newMsg.content}
+              onChange={(e) => setNewMsg({ ...newMsg, content: e.target.value })}
+              required
             />
             <div className="form-actions">
               <button
@@ -427,11 +118,7 @@ function Messagerie() {
                 className="cancel-btn"
                 onClick={() => {
                   setShowNewChat(false);
-                  if (window.innerWidth <= 700) {
-                    document
-                      .querySelector(".messagerie-container")
-                      .classList.remove("show-chat");
-                  }
+                  document.querySelector(".messagerie-container")?.classList.remove("show-chat");
                 }}
               >
                 Annuler
@@ -442,27 +129,23 @@ function Messagerie() {
         ) : selectedUser ? (
           <>
             <div className="chat-header">
-              <span className="back-btn" onClick={handleBackClick}>
-                ←
-              </span>
+              <span className="back-btn" onClick={handleBackClick}>←</span>
               <h2>Conversation avec {selectedUser}</h2>
             </div>
 
             <div className="chat-box">
-              {conversation.map((msg) => (
-                <div
-                  key={msg.id}
-                  className={`chat-message ${
-                    msg.sender === "Moi" ? "sent" : "received"
-                  }`}
-                >
-                  <div className="bubble">
-                    <span className="author">{msg.sender}</span>
-                    <p>{msg.content}</p>
-                    <span className="meta">{msg.date}</span>
+              {conversation.map(msg => {
+                const me = msg.from !== selectedUser; // simple heuristique
+                return (
+                  <div key={msg.id} className={`chat-message ${me ? "sent" : "received"}`}>
+                    <div className="bubble">
+                      <span className="author">{msg.from}</span>
+                      <p>{msg.content}</p>
+                      <span className="meta">{new Date(msg.date).toLocaleString()}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
               <div ref={chatEndRef} />
             </div>
 
@@ -470,10 +153,9 @@ function Messagerie() {
               <textarea
                 rows="2"
                 placeholder="Votre message..."
-                value={newMessage.content}
-                onChange={(e) =>
-                  setNewMessage({ ...newMessage, content: e.target.value })
-                }
+                value={newMsg.content}
+                onChange={(e) => setNewMsg({ ...newMsg, content: e.target.value })}
+                required
               />
               <button type="submit">Envoyer</button>
             </form>
@@ -485,6 +167,3 @@ function Messagerie() {
     </div>
   );
 }
-
-export default Messagerie;
-
