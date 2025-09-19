@@ -1,30 +1,33 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Book from "./Book";
-import { fetchBooks, updateBook } from "../api/book";
+import BookForm from "../Books/BookForm";
+import { fetchBooks, createBook, updateBook, deleteBook } from "../api/book";
 import { tokenStore } from "../api/http";
 
 const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, maxPrice }) => {
   const [books, setBooks] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [editing, setEditing] = useState(null); // null = création; objet = édition
 
-  useEffect(() => {
-    const loadBooks = async () => {
-      try {
-        const data = await fetchBooks({
-          q: searchInput,
-          author,
-          status: availability === true ? "available" : availability === false ? "rented" : null,
-          price_min: minPrice,
-          price_max: maxPrice,
-          genre: selectedGenre || null,
-        });
-        setBooks(data.data || []);
-      } catch (err) {
-        console.error("Erreur chargement livres:", err);
-      }
-    };
-    loadBooks();
+  const loadBooks = useCallback(async () => {
+    try {
+      const data = await fetchBooks({
+        q: searchInput,
+        author,
+        status: availability === true ? "available" : availability === false ? "rented" : null,
+        price_min: minPrice,
+        price_max: maxPrice,
+        genre: selectedGenre || null,
+      });
+      setBooks(data.data || []);
+    } catch (err) {
+      console.error("Erreur chargement livres:", err);
+    }
   }, [searchInput, author, availability, minPrice, maxPrice, selectedGenre]);
 
+  useEffect(() => { loadBooks(); }, [loadBooks]);
+
+  // Emprunter (déjà présent)
   async function handleRent(id) {
     try {
       if (!tokenStore.get()) { alert("Connecte-toi pour emprunter."); return; }
@@ -35,24 +38,82 @@ const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, 
     }
   }
 
+  // Ajouter
+  function openCreate() {
+    setEditing(null);
+    setShowForm(true);
+  }
+
+  // Modifier
+  function openEdit(book) {
+    setEditing(book);
+    setShowForm(true);
+  }
+
+  // Supprimer
+  async function handleDelete(id) {
+    if (!window.confirm("Supprimer ce livre ?")) return;
+    try {
+      await deleteBook(id);
+      setBooks(bs => bs.filter(b => b.id !== id));
+    } catch (e) {
+      alert(e.message || "Erreur suppression");
+    }
+  }
+
+  // Soumission formulaire (création/édition)
+  async function handleSubmit(payload) {
+    try {
+      if (editing) {
+        // édition
+        await updateBook(editing.id, payload); // auth:true dans api
+      } else {
+        // création
+        await createBook(payload);             // ⚠️ doit envoyer le token (voir note ci-dessous)
+      }
+      setShowForm(false);
+      setEditing(null);
+      await loadBooks(); // on recharge la liste pour être sûr
+    } catch (e) {
+      console.error(e);
+      alert(e.message || "Erreur enregistrement");
+    }
+  }
+
   return (
-    <ul className="book-list">
-      {books.map((book) => (
-        <li key={book.id} className="contact-line">
-          <Book
-            title={book.title}
-            author={book.author}
-            description={book.description}
-            price={book.price}
-            genre={book.genre}
-            // le Book attend "available" | "rented"
-            status={book.status}
-            // si ton composant Book gère un onClick:
-            onRent={() => handleRent(book.id)}
-          />
-        </li>
-      ))}
-    </ul>
+    <div>
+      {/* Barre d’actions */}
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
+        <h2 style={{ margin: 0 }}>Livres</h2>
+        <button className="btn btn-primary" onClick={openCreate}>Ajouter un livre</button>
+      </div>
+
+      {showForm && (
+        <BookForm
+          initialData={editing}
+          onCancel={() => { setShowForm(false); setEditing(null); }}
+          onSubmit={handleSubmit}
+        />
+      )}
+
+      <ul className="book-list">
+        {books.map((book) => (
+          <li key={book.id} className="contact-line">
+            <Book
+              title={book.title}
+              author={book.author}
+              description={book.description}
+              price={book.price}
+              genre={book.genre}
+              status={book.status}
+              onRent={() => handleRent(book.id)}
+              onEdit={() => openEdit(book)}
+              onDelete={() => handleDelete(book.id)}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

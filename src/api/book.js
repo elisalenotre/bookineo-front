@@ -23,14 +23,11 @@ export async function fetchBooks({ q, author, status, price_min, price_max, genr
 }
 
 export async function createBook(data) {
-  const res = await fetch(API_URL, {
+  return apiFetch(`/api/books`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-    mode: "cors",
+    body: data,
+    auth: true,
   });
-  if (!res.ok) throw new Error("Erreur création");
-  return res.json();
 }
 
 export async function updateBook(id, patch) {
@@ -43,15 +40,17 @@ export async function updateBook(id, patch) {
 }
 
 export async function deleteBook(id) {
-  const res = await fetch(`${API_URL}/${id}`, { method: "DELETE", mode: "cors" });
-  if (!res.ok) throw new Error("Erreur suppression");
+  await apiFetch(`/api/books/${id}`, {
+    method: "DELETE",
+    auth: true,
+  });
   return true;
 }
 
 export async function fetchGenres() {
   const res = await fetch(`${API_URL}/genres`, { mode: "cors" });
   if (!res.ok) throw new Error("Erreur genres");
-  const data = await res.json();   // { genres: [...] }
+  const data = await res.json();
   return data.genres || [];
 }
 
@@ -99,9 +98,8 @@ export async function fetchHistory(params = {}) {
   const usp = new URLSearchParams(params);
   const res = await fetch(`${API_URL}/history?${usp.toString()}`, { mode: "cors" });
   if (!res.ok) throw new Error("Erreur API");
-  const json = await res.json(); // <-- define it
+  const json = await res.json();
 
-  // Normalise vers la forme attendue par ta page Historique
   return (json.data || []).map(r => ({
     id: r.id,
     titre: r.title,
@@ -109,8 +107,12 @@ export async function fetchHistory(params = {}) {
     locataire: r.renter || r.renterEmail || null,
     dateLocation: r.rented_at,
     dateRetour: r.returned_at,
-    // durée si le back la renvoie (sinon, calcule-la côté front)
     duree: r.duration ?? undefined,
   }));
 }
 
+export async function fetchBookById(id) {
+  const res = await fetch(`${API_URL}/${id}`, { mode: "cors" });
+  if (!res.ok) throw new Error("Livre introuvable");
+  return res.json();
+}

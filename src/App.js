@@ -10,7 +10,9 @@ import Profile from "./profile/Profile";
 import Navbar from "./navbar/Navbar";  
 import Restitution from "./restitution/Restitution";  
 import Historique from "./historique/Historique";  
-import Messagerie from "./messagerie/Messagerie";  
+import Messagerie from "./messagerie/Messagerie";
+import BooksAdmin from "./Books/BooksAdmin";
+import BookForm from "./Books/BookForm";
 
 
 const dataMinPrice = Math.min(...books.map(book => book.price));
@@ -65,7 +67,10 @@ function App() {
         <Route path="/historique" element={< Historique/>} />
         <Route path="/messagerie" element={< Messagerie/>} />
 
-
+        <Route path="/books" element={<BooksAdmin />} />
+        <Route path="/books/new" element={<BookForm />} />
+        <Route path="/books/:id/edit" element={<BookForm />} />
+        
       </Routes>
     </Router>
 
