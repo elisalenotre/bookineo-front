@@ -7,7 +7,7 @@ export async function sendMessage(messages) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "mistralai/mistral-small-3.2", 
+      model: "smallthinker-3b-preview", 
       messages: messages,
     }),
   });
