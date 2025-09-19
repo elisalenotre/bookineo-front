@@ -10,6 +10,7 @@ p{
 
 .App{
   position: relative;
+  min-height: 100vh;
 }
 
 .container{
@@ -199,6 +200,7 @@ p{
     width: 92%;
     padding: 1.5rem;
   }
+
 }
 
 

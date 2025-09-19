@@ -377,4 +377,8 @@
     align-items: center;
   }
 
+  .chatbox{
+    bottom: 2rem;
+  }
+
 }
