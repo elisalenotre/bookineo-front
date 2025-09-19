@@ -12,11 +12,6 @@ const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, 
         const data = await fetchBooks({
           q: searchInput,
           author,
-          status: availability === true ? "available" : availability === false ? "unavailable" : null,
-          price_min: minPrice,
-          price_max: maxPrice,
-        });
-        setBooks(data.data);
           status: availability === true ? "available" : availability === false ? "rented" : null,
           price_min: minPrice,
           price_max: maxPrice,

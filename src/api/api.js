@@ -1,6 +1,6 @@
 import { apiFetch } from "./http";
 
-const BASE = (process.env.REACT_APP_API_URL || "http://127.0.0.1:8001");
+const BASE = (process.env.REACT_APP_API_URL || "http://127.0.0.1:8000");
 const API_URL = `${BASE}/api/books`;
 
 export async function fetchBooks({ q, author, status, price_min, price_max, genre, page = 1, limit = 10 }) {
