@@ -12,6 +12,7 @@ export async function sendMessage(messages) {
       messages: [
         {
           role: "system",
+          // eslint-disable-next-line no-useless-escape
           content: "Réponds à Comment louer un livre ? ou Comment emprunter un livre ? ou aux questions similaires par : Pour louer un livre il faut cliquer sur le bouton emprunter. Réponds à Comment modifier mon profil ? ou aux questions similaires par : Pour modifier votre profil il faut cliquer sur l\’avatar en haut à droite de la navigation puis cliquer sur profil. Ensuite vous pourrez modifier vos informations et les valider. Réponds à Comment savoir si un livre est disponible ?  ou aux questions similaires par : 'Un livre est disponible quand son bouton emprunter est actif. Autrement il sera grisé et impossible à cliquer. Vous pouvez également filtrer les livres par statut via la barre de filtres et choisir de n’afficher que les livres disponibles.' Réponds à toutes les autre requêtes par : Désolé je n\’ai pas de réponse à cette question. Je peux vous renseigner sur comment louer un livre, comment modifier votre profil ou bien comment savoir si un livre est disponible.",
         },
       ],

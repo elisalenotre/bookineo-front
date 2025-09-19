@@ -14,7 +14,6 @@ export default function Messagerie() {
   const [unreadCount, setUnreadCount] = useState(0);
   const [newMsg, setNewMsg] = useState({ to: "", content: "" });
   const [showNewChat, setShowNewChat] = useState(false);
-  const [openMenu, setOpenMenu] = useState(null);
   const chatEndRef = useRef(null);
 
   async function refreshLeft() {
