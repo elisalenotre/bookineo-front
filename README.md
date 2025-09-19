@@ -37,3 +37,14 @@ Si vous n’êtes pas satisfait des outils de build et des choix de configuratio
 
 Vous n’avez pas besoin d’utiliser `eject`. L’ensemble des fonctionnalités proposées est suffisant pour les petites et moyennes applications, et vous ne devriez pas vous sentir obligé de l’utiliser. Cependant, nous comprenons que cet outil ne serait pas utile si vous ne pouviez pas le personnaliser quand vous en avez besoin.
 
+# Installer le LLM du chatbot
+
+##Installer LM studio
+
+- Rendez-vous sur https://lmstudio.ai pour télécharger la version du logiciel compatible avec votre système d'exploitation.
+- Choisssez le mode développeur.
+
+## Configurer le LLM
+- Dans l'onglet discover : recherchez, téléchargez puis activer qwen2-1.5b-instruct.
+- Si vous souhaitez utiliser un LLM différent, entrez son nom dans ./src/api/ChatApi.js à la ligne 10.
+- Vous pouvez maintenant utiliser le chatbot en bas à droite de l'accueil.
