@@ -13,8 +13,6 @@ import Historique from "./historique/Historique";
 import Messagerie from "./messagerie/Messagerie";  
 
 
-
-
 const dataMinPrice = Math.min(...books.map(book => book.price));
 const dataMaxPrice = Math.max(...books.map(book => book.price));
 

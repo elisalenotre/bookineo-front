@@ -37,16 +37,15 @@ const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, 
 
   return (
     <ul className="book-list">
-      {books.map((book) => (
-        <li key={book.id}>
+      {filteredBooks.map((book, index) => (
+        <li key={index} className="contact-line">
           <Book
             title={book.title}
             author={book.author}
             description={book.description}
             price={book.price}
             genre={book.genre}
-            status={book.status}
-            onRent={() => handleRent(book.id)}
+            status={book.available ? "Disponible" : "Indisponible"}
           />
         </li>
       ))}
