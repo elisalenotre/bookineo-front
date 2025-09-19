@@ -1,21 +1,14 @@
-import { tokenStore } from "./http";
-
-const BASE = process.env.REACT_APP_API_URL || "http://127.0.0.1:8001";
+import { apiFetch, tokenStore } from "./http";
 
 export async function loginUser({ email, password, rememberMe }) {
-  const res = await fetch(`${BASE}/api/auth/login`, {
+  const data = await apiFetch("/api/auth/login", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    mode: "cors",
-    body: JSON.stringify({ email, password }),
+    body: { email, password },
   });
 
-  if (!res.ok) throw new Error("Identifiants invalides");
-  const data = await res.json();
-
-  const token = data.token || data.jwt || data.access_token;
+  const token = data.token || data.jwt || data.access_token || data.id_token;
   if (!token) throw new Error("Token manquant dans la réponse");
-  tokenStore.set(token);                      
+  tokenStore.set(token);
 
   if (rememberMe) localStorage.setItem("current_user_email", email);
   else localStorage.removeItem("current_user_email");
@@ -24,14 +17,14 @@ export async function loginUser({ email, password, rememberMe }) {
 }
 
 export async function registerUser(payload) {
-  const res = await fetch(`${BASE}/api/auth/register`, {
+  return apiFetch("/api/auth/register", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    mode: "cors",
-    body: JSON.stringify(payload),
+    body: payload,
   });
-  if (!res.ok) throw new Error("Inscription impossible");
-  return res.json();
+}
+
+export async function me() {
+  return apiFetch("/api/auth/me", { auth: true });
 }
 
 export function logout() {
