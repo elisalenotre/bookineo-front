@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Restitution.css";
 import { fetchBooks, updateBook } from "../api/book";
 
 export default function ReturnBook() {
-  const [books, setBooks] = useState([]);        //livres rented
+  const [books, setBooks] = useState([]);        // livres loués
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   const [selectedBookId, setSelectedBookId] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [comment, setComment] = useState("");
-  const [history, setHistory] = useState([]);
 
   useEffect(() => {
     const load = async () => {
@@ -40,10 +39,6 @@ export default function ReturnBook() {
 
       const b = books.find(x => String(x.id) === String(selectedBookId));
       setBooks(prev => prev.filter(x => String(x.id) !== String(selectedBookId))); // on l’enlève de la liste “loués”
-      setHistory(prev => [
-        ...prev,
-        { bookId: selectedBookId, title: b?.title, date: returnDate, comment: comment || "Aucun commentaire" },
-      ]);
 
       // reset champs
       setSelectedBookId("");
