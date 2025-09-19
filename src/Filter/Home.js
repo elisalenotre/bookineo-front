@@ -10,7 +10,6 @@ import AutocompleteSearch from "./AutocompleteSearch";
 import ChatBox from '../chatbox/ChatBox';
 
 
-
 const Home = ({minPrice, maxPrice, onMinPriceChange, onMaxPriceChange }) => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
@@ -60,6 +59,7 @@ const Home = ({minPrice, maxPrice, onMinPriceChange, onMaxPriceChange }) => {
             availability={availability}
             author={author}
           />
+
           <ChatBox />
       </div>
   );

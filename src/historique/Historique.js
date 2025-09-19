@@ -70,7 +70,7 @@ const Historique = () => {
         />
 
         <select value={sortKey} onChange={e => setSortKey(e.target.value)}>
-          <option value="">-- Trier par --</option>
+          <option value="">Trier par</option>
           <option value="titre">Livre</option>
           <option value="proprietaire">Propriétaire</option>
           <option value="locataire">Locataire</option>
