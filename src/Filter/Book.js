@@ -5,6 +5,7 @@ const Book = ({title, author, description, price, genre, status, onRent}) => {
     return(
         <div className='box book-box'>
             <p className="title-tag"><strong> {title}</strong> </p>
+            <p className="availability-tag"> <i>{status}</i> </p>
             <p className="availability-tag">
                <i>{status === "available" ? "Disponible" : "Indisponible"}</i>
             </p>
@@ -16,6 +17,8 @@ const Book = ({title, author, description, price, genre, status, onRent}) => {
             <p className="price-tag"><strong></strong> {price}€ </p>
             <strong>Genre :</strong> {genre}
             <br />
+            <button className={`btn btn-rent ${status === "Disponible" ? "active" : "disabled"}`}>
+                Emprunter
             <button
             className={`btn btn-rent ${status === "available" ? "active" : "disabled"}`}
             onClick={onRent}
