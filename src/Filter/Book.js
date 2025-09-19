@@ -17,8 +17,6 @@ const Book = ({title, author, description, price, genre, status, onRent}) => {
             <p className="price-tag"><strong></strong> {price}€ </p>
             <strong>Genre :</strong> {genre}
             <br />
-            <button className={`btn btn-rent ${status === "Disponible" ? "active" : "disabled"}`}>
-                Emprunter
             <button
             className={`btn btn-rent ${status === "available" ? "active" : "disabled"}`}
             onClick={onRent}
