@@ -1,52 +1,43 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Restitution.css";
-import { fetchBooks, updateBook } from "../api/book";
+import { fetchRentedBooks, returnBookById } from "../api/book";
 
 export default function ReturnBook() {
-  const [books, setBooks] = useState([]);        // livres loués
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
+  const [books, setBooks] = useState([]);
   const [selectedBookId, setSelectedBookId] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [comment, setComment] = useState("");
 
   useEffect(() => {
-    const load = async () => {
+    (async () => {
       try {
-        setLoading(true);
-        setError("");
-        const res = await fetchBooks({ status: "rented", page: 1, limit: 100 });
-        setBooks(res.data || []);
+        // si tu as l’email en localStorage après login, tu peux filtrer:
+        // const email = localStorage.getItem("current_user_email");
+        // const { data } = await fetchRentedBooks({ renter_email: email });
+        const list = await fetchRentedBooks(); // renvoie directement un []
+        setBooks(Array.isArray(list) ? list : []);
       } catch (e) {
-        setError(e.message || "Erreur chargement");
-      } finally {
-        setLoading(false);
+        console.error(e);
+        alert("Impossible de charger les livres loués");
       }
-    };
-    load();
+    })();
   }, []);
 
   const handleReturn = async () => {
     if (!selectedBookId || !returnDate) {
-      alert("Veuillez sélectionner un livre et saisir une date.");
+      alert("Sélectionne un livre + une date de retour");
       return;
     }
     try {
-      setError("");
-      // met livre disponible
-      await updateBook(selectedBookId, { status: "available" });
-
-      const b = books.find(x => String(x.id) === String(selectedBookId));
-      setBooks(prev => prev.filter(x => String(x.id) !== String(selectedBookId))); // on l’enlève de la liste “loués”
-
-      // reset champs
+      await returnBookById(selectedBookId, { return_date: returnDate, comment });
+      // optimiste : maj local
+      setBooks(prev => prev.filter(b => b.id !== Number(selectedBookId)));
       setSelectedBookId("");
       setReturnDate("");
       setComment("");
-
-      alert(`Le livre "${b?.title ?? selectedBookId}" est maintenant disponible ✅`);
+      alert("Livre restitué !");
     } catch (e) {
+      console.error(e);
       alert(e.message || "HTTP 500");
     }
   };
@@ -55,16 +46,13 @@ export default function ReturnBook() {
     <div className="return-book">
       <h2>Retourner un livre</h2>
 
-      {loading && <p>Chargement…</p>}
-      {error && !loading && <p style={{color:"crimson"}}>{error}</p>}
-
       <div>
         <label>Livre :</label>
         <select value={selectedBookId} onChange={e => setSelectedBookId(e.target.value)}>
           <option value="">Sélectionner un livre</option>
-          {books.map(book => (
-            <option key={book.id} value={book.id}>
-              {book.title} ({book.status === "rented" ? "emprunté" : book.status})
+          {books.map(b => (
+            <option key={b.id} value={b.id}>
+              {b.title} ({b.status})
             </option>
           ))}
         </select>
@@ -80,9 +68,7 @@ export default function ReturnBook() {
         <textarea value={comment} onChange={e => setComment(e.target.value)} placeholder="Facultatif" />
       </div>
 
-      <button onClick={handleReturn} disabled={!books.length || loading}>
-        Retourner le livre
-      </button>
+      <button onClick={handleReturn}>Retourner le livre</button>
     </div>
   );
 }
