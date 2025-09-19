@@ -1,6 +1,6 @@
 const BASE_URL =
   (typeof process !== "undefined" && process.env && process.env.REACT_APP_API_URL) ||
-  "http://127.0.0.1:8000";
+  "http://127.0.0.1:8001";
 
 // --- token store: localStorage (remember) ou sessionStorage ---
 export const tokenStore = {
