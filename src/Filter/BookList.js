@@ -37,15 +37,18 @@ const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, 
 
   return (
     <ul className="book-list">
-      {filteredBooks.map((book, index) => (
-        <li key={index} className="contact-line">
+      {books.map((book) => (
+        <li key={book.id} className="contact-line">
           <Book
             title={book.title}
             author={book.author}
             description={book.description}
             price={book.price}
             genre={book.genre}
-            status={book.available ? "Disponible" : "Indisponible"}
+            // le Book attend "available" | "rented"
+            status={book.status}
+            // si ton composant Book gère un onClick:
+            onRent={() => handleRent(book.id)}
           />
         </li>
       ))}
