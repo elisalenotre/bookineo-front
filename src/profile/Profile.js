@@ -6,12 +6,11 @@ import { getMyProfile, updateMyProfile } from "../api/user";
 export default function Profile() {
   const navigate = useNavigate();
 
-  // on garde des clés qui matchent le back: first_name, last_name, birth_date
   const [profile, setProfile] = useState({
     first_name: "",
     last_name: "",
     birth_date: "",
-    email: "",            // affichage en lecture seule si le back le renvoie
+    email: "",
   });
 
   const [loading, setLoading] = useState(true);
@@ -19,19 +18,17 @@ export default function Profile() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
-  // Charge les infos du profil au montage
   useEffect(() => {
     (async () => {
       try {
-        const me = await getMyProfile(); // { first_name, last_name, birth_date, email, ... }
+        const me = await getMyProfile(); 
         setProfile({
           first_name: me.first_name ?? me.firstName ?? "",
           last_name: me.last_name ?? me.lastName ?? "",
-          birth_date: me.birth_date ? String(me.birth_date).slice(0, 10) : "", // YYYY-MM-DD pour <input type="date"/>
+          birth_date: me.birth_date ? String(me.birth_date).slice(0, 10) : "", 
           email: me.email ?? me.username ?? "",
         });
       } catch (e) {
-        // si non connecté → redirige vers login
         if (e.status === 401) navigate("/login");
         else setError(e.message || "Impossible de charger le profil");
       } finally {
@@ -52,7 +49,7 @@ export default function Profile() {
       await updateMyProfile({
         first_name: profile.first_name,
         last_name: profile.last_name,
-        birth_date: profile.birth_date || null, // si vide on envoie null
+        birth_date: profile.birth_date || null, 
       });
       setSuccess("Profil mis à jour avec succès !");
       setEditMode(false);
@@ -79,7 +76,7 @@ export default function Profile() {
         {error && <div className="error-box">{error}</div>}
 
         <form onSubmit={onSubmit}>
-          {/* Email en lecture seule si tu veux l’afficher */}
+          {/* Email en lecture seule*/}
           {profile.email && (
             <div className="form-group">
               <label>Email</label>
