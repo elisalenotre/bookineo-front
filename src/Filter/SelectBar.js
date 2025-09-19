@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchGenres } from "../api/api";
+import { fetchGenres } from "../api/book";
 
 const GenreList = ({ selectedGenre, setSelectedGenre }) => {
   const [genres, setGenres] = useState([]);

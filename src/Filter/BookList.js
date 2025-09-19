@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Book from "./Book";
-import { fetchBooks, updateBook } from "../api/api";
+import { fetchBooks, updateBook } from "../api/book";
 import { tokenStore } from "../api/http";
 
 const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, maxPrice }) => {
