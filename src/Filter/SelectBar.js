@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { fetchGenres } from "../api/book";
 
+
+export default GenreList;
 const GenreList = ({ selectedGenre, setSelectedGenre }) => {
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -32,5 +34,3 @@ const GenreList = ({ selectedGenre, setSelectedGenre }) => {
     </div>
   );
 };
-
-export default GenreList;

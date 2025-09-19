@@ -5,6 +5,7 @@ const Book = ({title, author, description, price, genre, status, onRent}) => {
     return(
         <div className='box book-box'>
             <p className="title-tag"><strong> {title}</strong> </p>
+            <p className="availability-tag"> <i>{status}</i> </p>
             <p className="availability-tag">
                <i>{status === "available" ? "Disponible" : "Indisponible"}</i>
             </p>

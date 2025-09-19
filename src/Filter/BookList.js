@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Book from "./Book";
 import { fetchBooks, updateBook } from "../api/book";
 import { tokenStore } from "../api/http";
@@ -25,15 +25,15 @@ const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, 
     loadBooks();
   }, [searchInput, author, availability, minPrice, maxPrice, selectedGenre]);
 
-    async function handleRent(id) {
-      try {
-        if (!tokenStore.get()) { alert("Connecte-toi pour emprunter."); return; }
-        await updateBook(id, { status: "rented" });
-        setBooks(bs => bs.map(b => (b.id === id ? { ...b, status: "rented" } : b)));
-      } catch (e) {
-        alert(e.message || "Erreur lors de l'emprunt (auth requise ?)");
-      }
+  async function handleRent(id) {
+    try {
+      if (!tokenStore.get()) { alert("Connecte-toi pour emprunter."); return; }
+      await updateBook(id, { status: "rented" });
+      setBooks(bs => bs.map(b => (b.id === id ? { ...b, status: "rented" } : b)));
+    } catch (e) {
+      alert(e.message || "Erreur lors de l'emprunt (auth requise ?)");
     }
+  }
 
   return (
     <ul className="book-list">
