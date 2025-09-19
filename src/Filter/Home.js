@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import BookList from './BookList';
 import PriceSelector from './PriceSelector';
 import SearchBar from './SearchBar';
-import SearchFilters from './SearchFilters';
-import books from './BookData';
 import RadioSelector from "./RadioSelector";
 import SelectBar from "./SelectBar";
 import AutocompleteSearch from "./AutocompleteSearch";
