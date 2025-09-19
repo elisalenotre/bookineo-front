@@ -1,6 +1,5 @@
 import { apiFetch } from "./http";
 
-/** GET /api/users/me */
 export function getMyProfile() {
   return apiFetch("/api/users/me", { auth: true });
 }

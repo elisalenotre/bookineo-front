@@ -31,7 +31,7 @@ function App() {
     setMaxPrice(newMaxPrice);
   };
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // "true" pour tester le bouton Profil dans la Navbar
+  const [isLoggedIn, setIsLoggedIn] = useState(true); 
 
   const handleLogout = () => {
     setIsLoggedIn(false);

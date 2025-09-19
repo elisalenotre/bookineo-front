@@ -76,7 +76,6 @@ export default function Profile() {
         {error && <div className="error-box">{error}</div>}
 
         <form onSubmit={onSubmit}>
-          {/* Email en lecture seule*/}
           {profile.email && (
             <div className="form-group">
               <label>Email</label>

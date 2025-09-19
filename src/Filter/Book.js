@@ -6,7 +6,7 @@ const Book = ({
   description,
   price,
   genre,
-  status,              // "available" | "rented"
+  status,
   onRent,
   onEdit,
   onDelete,

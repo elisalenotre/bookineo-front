@@ -16,7 +16,6 @@ export default function ForgotPassword() {
       return;
     }
 
-    // Simulation 
     setSuccess("Un lien de réinitialisation a été envoyé à votre email ✅");
   };
 

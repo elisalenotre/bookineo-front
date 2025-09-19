@@ -22,7 +22,7 @@ export default function BooksAdmin() {
     }
   }
 
-  useEffect(() => { load(); }, []); // au premier rendu
+  useEffect(() => { load(); }, []); 
 
   async function handleDelete(id) {
     if (!window.confirm("Supprimer ce livre ?")) return;

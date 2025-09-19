@@ -7,7 +7,7 @@ import { tokenStore } from "../api/http";
 const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, maxPrice }) => {
   const [books, setBooks] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [editing, setEditing] = useState(null); // null = création; objet = édition
+  const [editing, setEditing] = useState(null); 
 
   const loadBooks = useCallback(async () => {
     try {
@@ -27,7 +27,6 @@ const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, 
 
   useEffect(() => { loadBooks(); }, [loadBooks]);
 
-  // Emprunter (déjà présent)
   async function handleRent(id) {
     try {
       if (!tokenStore.get()) { alert("Connecte-toi pour emprunter."); return; }
@@ -38,19 +37,16 @@ const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, 
     }
   }
 
-  // Ajouter
   function openCreate() {
     setEditing(null);
     setShowForm(true);
   }
 
-  // Modifier
   function openEdit(book) {
     setEditing(book);
     setShowForm(true);
   }
 
-  // Supprimer
   async function handleDelete(id) {
     if (!window.confirm("Supprimer ce livre ?")) return;
     try {
@@ -61,19 +57,16 @@ const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, 
     }
   }
 
-  // Soumission formulaire (création/édition)
   async function handleSubmit(payload) {
     try {
       if (editing) {
-        // édition
-        await updateBook(editing.id, payload); // auth:true dans api
+        await updateBook(editing.id, payload); 
       } else {
-        // création
-        await createBook(payload);             // ⚠️ doit envoyer le token (voir note ci-dessous)
+        await createBook(payload);           
       }
       setShowForm(false);
       setEditing(null);
-      await loadBooks(); // on recharge la liste pour être sûr
+      await loadBooks(); 
     } catch (e) {
       console.error(e);
       alert(e.message || "Erreur enregistrement");
@@ -81,11 +74,10 @@ const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, 
   }
 
   return (
-    <div>
-      {/* Barre d’actions */}
+    <div className="books-section">
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
         <h2 style={{ margin: 0 }}>Livres</h2>
-        <button className="btn btn-primary" onClick={openCreate}>Ajouter un livre</button>
+        <button className="btn btn-primary btn-display-books" onClick={openCreate}>Ajouter un livre</button>
       </div>
 
       {showForm && (

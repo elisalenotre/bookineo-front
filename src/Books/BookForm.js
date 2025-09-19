@@ -20,7 +20,6 @@ export default function BookForm({ initialData = null, onCancel, onSubmit }) {
         price: initialData.price ?? "",
         genre: initialData.genre || "",
         description: initialData.description || "",
-        // côté back: publicationDate est exposée en camelCase → on convertit vers string YYYY-MM-DD si présent
         publication_date: initialData.publicationDate
           ? String(initialData.publicationDate).slice(0, 10)
           : "",
@@ -44,7 +43,7 @@ export default function BookForm({ initialData = null, onCancel, onSubmit }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="box" style={{ marginBottom: 16 }}>
+    <form onSubmit={handleSubmit} className="box book-form" style={{ marginBottom: 16 }}>
       <h3 style={{ marginTop: 0 }}>{initialData ? "Modifier le livre" : "Ajouter un livre"}</h3>
 
       <label>Titre</label>
