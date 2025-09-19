@@ -7,7 +7,7 @@ export async function sendMessage(messages) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "qwen2-1.5b-instruct", 
+      model: "qwen2-1.5b-instruct", //insérez ici le nom de votre LLM
       api_key:"lm-studio",
       messages: [
         {
