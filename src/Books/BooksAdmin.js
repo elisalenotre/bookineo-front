@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchBooks, deleteBook } from "../api/book";
 import { useNavigate } from "react-router-dom";
+import './Books.css';
 
 export default function BooksAdmin() {
   const [rows, setRows] = useState([]);

@@ -6,6 +6,7 @@ import RadioSelector from "./RadioSelector";
 import SelectBar from "./SelectBar";
 import AutocompleteSearch from "./AutocompleteSearch";
 import ChatBox from '../chatbox/ChatBox';
+import './Home.css';
 
 const Home = () => {
   // filtres texte
@@ -70,4 +71,7 @@ const Home = () => {
   );
 };
 
+
 export default Home;
+
+

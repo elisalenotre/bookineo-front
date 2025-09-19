@@ -20,7 +20,7 @@ export default function AutocompleteSearch({ author, setAuthor }) {
 
   return (
     <div className="selector-box">
-      <h3>Filtrer par auteur</h3>
+      <h3>Filtrer par auteur :</h3>
       <input type="text" className="input search-bar" value={author} onChange={handleChange} placeholder="rechercher l'auteur"/>
       {suggestions.length > 0 && (
         <ul className="suggestions">
