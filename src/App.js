@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"; 
 import SignIn from "./authentification/SignIn";
 import SignUp from "./authentification/SignUp";
 import ForgotPassword from "./authentification/ForgotPassword";
 import Home from "./Filter/Home";
-import books from '././Filter/BookData';
+import books from './Filter/BookData';
 import './authentification/SignIn.css'
 import Profile from "./profile/Profile";
 import Navbar from "./navbar/Navbar";  
@@ -12,10 +12,11 @@ import Restitution from "./restitution/Restitution";
 import Historique from "./historique/Historique";  
 
 
+
 const dataMinPrice = Math.min(...books.map(book => book.price));
 const dataMaxPrice = Math.max(...books.map(book => book.price));
 
-
+  
 function App() {
   const [minPrice, setMinPrice] = useState(dataMinPrice);
   const [maxPrice, setMaxPrice] = useState(dataMaxPrice);
@@ -33,6 +34,7 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
   };
+
 
   return (
     <div className="App">
@@ -64,6 +66,7 @@ function App() {
 
       </Routes>
     </Router>
+
     </div>
   );
 }

@@ -1,5 +1,4 @@
-// src/api.js
-const API_URL = "http://localhost:8000/api/books"; // adjust to your backend URL
+const API_URL = "http://localhost:8000/api/books"; 
 
 export async function fetchBooks({ q, author, status, price_min, price_max, page = 1, limit = 10 }) {
   const params = new URLSearchParams();

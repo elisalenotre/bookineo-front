@@ -7,7 +7,7 @@ import books from './BookData';
 import RadioSelector from "./RadioSelector";
 import SelectBar from "./SelectBar";
 import AutocompleteSearch from "./AutocompleteSearch";
-
+import Chatbot from "../ChatBot/ChatBot";
 
 
 const Home = ({minPrice, maxPrice, onMinPriceChange, onMaxPriceChange }) => {
@@ -59,6 +59,7 @@ const Home = ({minPrice, maxPrice, onMinPriceChange, onMaxPriceChange }) => {
             availability={availability}
             author={author}
           />
+          <Chatbot />
       </div>
   );
 };
