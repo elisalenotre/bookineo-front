@@ -59,7 +59,6 @@ const Home = ({minPrice, maxPrice, onMinPriceChange, onMaxPriceChange }) => {
             availability={availability}
             author={author}
           />
-
           <ChatBox />
       </div>
   );

@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Book from "./Book";
-import { fetchBooks } from "../api/api";
-import { useEffect, useState } from "react";
-import Book from "./Book";
 import { fetchBooks, updateBook } from "../api/api";
 import { tokenStore } from "../api/http";
 
@@ -15,11 +12,6 @@ const BookList = ({ searchInput, selectedGenre, availability, author, minPrice, 
         const data = await fetchBooks({
           q: searchInput,
           author,
-          status: availability === true ? "available" : availability === false ? "unavailable" : null,
-          price_min: minPrice,
-          price_max: maxPrice,
-        });
-        setBooks(data.data);
           status: availability === true ? "available" : availability === false ? "rented" : null,
           price_min: minPrice,
           price_max: maxPrice,
